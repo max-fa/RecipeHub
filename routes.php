@@ -1,6 +1,6 @@
 <?php
 
-Router::register("/users",function() {
+Router::serve("/users",function() {
 	
 	echo '
 	
@@ -16,7 +16,7 @@ Router::register("/users",function() {
 	
 });
 
-Router::register("/recipes",function() {
+Router::serve("/recipes",function() {
 	
 	echo '
 	
@@ -32,7 +32,7 @@ Router::register("/recipes",function() {
 	
 });
 
-Router::register("/items",function() {
+Router::serve("/items",function() {
 	
 	echo '
 	
@@ -48,6 +48,8 @@ Router::register("/items",function() {
 	
 });
 
-Router::register("/secret","\\views\secret.html");
+Router::serve("/secret","\\views\secret.html");
 
 Router::protect("/secret");
+
+//Router::expose("\\views\resources");
