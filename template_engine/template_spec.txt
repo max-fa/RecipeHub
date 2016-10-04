@@ -1,0 +1,104 @@
+Statements:
+	Opened with: @statement_name
+	Closed with: @end
+	Purpose: to provide built-in functionality that cannot be performed by expressions
+
+Expressions:
+	Opened with: #
+	Closed with: nothing,expressions are only evaluated until the end of the line they're on or the parser encounters whitespace,whichever comes first.
+	Purpose: to perform math expressions, and variable access and manipulation
+	
+Operators:
+	Purpose: to provide important functionality in a single keystroke to be used in conjuction with expressions
+	
+List of Operators:
+	+:
+		description:
+			Attempts to add the result of two expressions,will throw an error if not in between two expressions.
+			Expressions that return traditionally non-addable types(objects,arrays,booleans) will have they're return values
+			coerced into strings.
+			
+			When adding a number to a string,the number will be coerced into a string and appended
+			to the string.
+			
+			When adding a string to a number,the number of characters(including whitespace and newlines) will be added to the number.
+			
+			
+	-:
+		description:
+			Performs the inverse operation of '+'. All traditionally non-subtractable types will be coerced into strings
+			when involved at all in a subtraction operation.
+			
+			When subtracting strings from strings,the amount of characters(including whitespace and newlines) in the right string 
+			will be removed from the left string.
+			
+			When subtracting strings from a number,the number of characters in the string will be subtracted from the number.
+			
+			When subtracting numbers from strings,a number of characters equal to the number will be removed from the string,
+			starting from the end of the string.
+			
+	*:
+		description:
+			Performs multiplication of the left operand by the right operand.
+			
+			When the left operand is a string and the right one is a number,string has it's contents multiplied.
+			
+			When both operands are strings,the strings are merely concatenated.
+			
+			When the left operand is a number and the right a string,the number is multiplied by the number
+			of characters in the string.
+			
+			Non multipliable types will not be coerced and will throw TypeErrors.
+			
+	==:
+		description:
+			Performs an equality test on the left & right operands and returns the result immediately.
+			If comparing strings,it will check if they are equal to the level of whitespace.
+			If comparing numbers,it will compare they're numerical size.
+			If comparing complex structures such as arrays and objects,it will check if they are exactly the same value.
+			Cross-comparing accross types will result in a TypeError.
+			
+	!=:
+		description:
+			Performs the inverse operation of '==' with all the same rules as above.
+			
+	=:
+		description:
+			Sets the left operand to the value returned by or evaluated from the right operand.
+	
+List of Statements:
+	@[number]_times:
+		description:
+			Prints a given html block(while evaluating expressions and other statements inside this statement)a number of times equal to the integer it is invoked with.
+			It also passes #index variable to the code inside the statement holding an integer telling what the current cycle is in.
+		Usage:
+			<ul>
+				@5_times:
+					<li>Hello World!</li>
+				@end
+			</ul>
+			
+	@if(condition):
+		description:
+			Evaluates a given html block,statement,or expression if the given condition is true
+		Usage:
+			<p>
+				Hello,
+				@if name != null:
+					my name is #name!
+				@else:
+					I don't have a name!
+				@end
+			</p>
+	
+	@else:
+		description:
+			Evaluates a given expression if a preceding @if statement evaluates to false
+		Usage:
+			See above
+			
+	@end:
+		description:
+			Terminates the previous @if,@else,or @_times statement.
+ 		Usage:
+			See all examples above

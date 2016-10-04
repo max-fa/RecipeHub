@@ -1,0 +1,26 @@
+Steps in parsing and executing templates
+
+Step One - Parsing:
+	Purpose:
+		To extract all statements and expressions in a template and check that they are legal,and properly terminated
+		and then build a structure of these statements and expressions to pass to the executer to process independently of the rest
+		of the template.
+	Procedure:
+		Iterate through template file as string and record all instances of @'s and #'s and the strings after them,to check if they
+		are valid and properly closed all while passing them into a properly structured array.Ignore '\' escaped @'s and #'s
+		so that they are left as-is.
+		
+Step Two - Executing:
+	Purpose:
+		To run statements and expressions according to the specification and produce penulitmate html output to pass to linker.
+	Procedure:
+		Once passed the recordings of all statements and expressions,evaluate each and every single one according to the specification
+		whilst catching any runtime errors such as type errors or anything else that escaped the syntax processing phase of parsing.
+		
+Step Three - Linking:
+	Purpose:
+		To take output of Executing stage and insert into html template while removing all statement and expressions
+		tokens as well as escape slashes.
+	Procedure:
+		Go to all marked spots in template and replace with corresponding content in data structure recieved from Executer
+		and replace with Executer output and remove all template syntax(@statements,#expressions,and escape sequences: \@).
