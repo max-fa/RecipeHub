@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>RecipeHub</title>
+		<title>Recipehub</title>
 		<meta charset="utf-8">
 	</head>
-	
 	<body>
-		<div id="main">
-			@print:
-			<h1>Welcome to RecipeHub!!!</h1>
-			<p>This is a site to save,edit,and view recipes.</p>
-			<b>This is your {url}</b>
-			@end
-		</div>
+		@if(#one > #two):
+			<p>True</p>
+		@else:
+			<p>False</p>
+		@end
+		@
+		<ul>
+		@5_times:
+			<li>Something new or old</li>
+		@end
+		</ul>
 	</body>
+
 </html>
