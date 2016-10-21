@@ -1,6 +1,7 @@
 <?php
 require '../pdo_connect.php';
-require 'validate.php';
+require 'create_functions.php';
+
 
 function create_recipe($recipe) {
 	
@@ -39,10 +40,3 @@ function create_recipe($recipe) {
 
 	
 }
-
-
-
-
-
-
-
