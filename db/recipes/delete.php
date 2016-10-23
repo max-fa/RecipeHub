@@ -1,6 +1,6 @@
 <?php
 require '../pdo_connect.php';
-require 'delete_functions.php';
+require 'common_functions.php';
 
 function delete_recipe($id,$user_id) {
 	

@@ -1,6 +1,7 @@
 <?php
 require '../pdo_connect.php';
 require 'update_functions.php';
+require 'common_functions.php';
 
 function update_recipe($id,$updates,$user_id) {
 	
