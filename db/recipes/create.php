@@ -15,28 +15,36 @@ function create_recipe($recipe) {
 	$statement->bindValue(":published",$recipe["published"]);
 	$statement->bindValue(":user_id",$recipe["user_id"]);
 	
-	if( $valid_recipe[0] === true ) {
+	if( $pdo ) {
 		
-		$insert = $statement->execute();
-		
-		if( $insert !== false ) {
+		if( $valid_recipe[0] === true ) {
 			
-			return true;
+			$insert = $statement->execute();
+			
+			if( $insert !== false ) {
+				
+				return true;
+				
+			} else {
+				
+				echo $statement->errorCode();
+				echo $statement->errorInfo()[2];
+				return false;
+				
+			}			
 			
 		} else {
 			
-			echo $statement->errorCode();
-			echo $statement->errorInfo()[2];
+			echo $valid_recipe[1];
 			return false;
 			
-		}			
+		}		
 		
 	} else {
 		
-		echo $valid_recipe[1];
+		echo "Could not connect to the database";
 		return false;
 		
 	}
-
 	
 }

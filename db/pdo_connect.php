@@ -11,7 +11,8 @@ function pdo_connect() {
 		
 	} catch( PDOException $e ) {
 		
-		die("Couldn't connect to database.");
+		echo "Couldn't connect to the database";
+		return false;
 		
 	}
 	

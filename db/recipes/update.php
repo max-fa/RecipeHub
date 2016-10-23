@@ -1,14 +1,17 @@
 <?php
 require '../pdo_connect.php';
-require 'delete_functions.php';
+require 'update_functions.php';
 
-function delete_recipe($id,$user_id) {
+function update_recipe($id,$updates,$user_id) {
 	
 	$pdo = pdo_connect();
-	$recipe_exists = recipe_exists($id,$pdo);
 	$statement;
+	$recipe_exists;
 	$user_is_owner;
+	
 	if( $pdo ) {
+		
+		$recipe_exists = recipe_exists($id,$pdo);
 		
 		if( $recipe_exists ) {
 			
@@ -16,8 +19,9 @@ function delete_recipe($id,$user_id) {
 			
 			if( $user_is_owner ) {
 				
-				$statement = $pdo->prepare("DELETE FROM recipes WHERE id = :id");
-				$statement->bindValue(":id",$id);
+				$statement = $pdo->prepare( build_query($updates,$pdo) );
+				
+				bindValues($updates,$id,$statement);
 				
 				if( $statement->execute() ) {
 					
@@ -25,32 +29,30 @@ function delete_recipe($id,$user_id) {
 					
 				} else {
 					
-					echo "Could not delete the recipe";
+					echo "Could not update";
 					return false;
 					
 				}
 				
-				
 			} else {
 				
-				echo "We cannot delete";
+				echo "This ain't yours!";
 				return false;
 				
 			}
 			
 		} else {
 			
-			echo "Recipe doesn't exist";
+			echo "That recipe doesn't exist";
 			return false;
 			
-		}		
+		}
 		
 	} else {
 		
-		echo "Could not connect to the database";
+		echo "Could not connect to database";
 		return false;
 		
 	}
-
 	
 }
