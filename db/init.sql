@@ -1,6 +1,6 @@
 INSERT INTO users (username,password) VALUES('admin','login'),('max','login');
 
-INSERT INTO fooditems (name,description,user_id) VALUES('Bread','bready and delicious',1),('Brocoli','green and cuniferous,',1);
+INSERT INTO fooditems (name,description,username) VALUES('Bread','bready and delicious','admin'),('Brocoli','green and cuniferous,','admin');
 
 INSERT INTO recipes (title,ingredients,instructions,published,user_id) VALUES('sandwich','bread','fill the bread',true,1),
 ('brocoli & cheese','brocoli and cheese','smother the brocoli in cheese',false,1);
