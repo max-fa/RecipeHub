@@ -1,6 +1,6 @@
 <?php
 require '../pdo_connect.php';
-require 'create_functions.php';
+require 'common_functions.php';
 
 function create_trait($trait_data) {
 	
