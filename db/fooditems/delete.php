@@ -8,6 +8,7 @@ function delete_fooditem($id,$username) {
 	$fooditem_exists = fooditem_is_real($id,$pdo);
 	$statement;
 	$user_is_owner;
+	
 	if( $pdo ) {
 		
 		if( $fooditem_exists ) {
