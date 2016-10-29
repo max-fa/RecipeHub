@@ -1,9 +1,9 @@
 <?php
+/* require '../pdo_connect.php';
+require 'associate_functions.php';
+$pdo = pdo_connect();
 
-require 'update.php';
+var_dump( not_already_associated(1,1,$pdo) ); */
 
-$data = [
-	"name"=>"chicken"
-];
-
-var_dump( update_fooditem(2,$data,'admin') );
+require 'dissociate.php';
+var_dump( dissociate_trait(4,4,'max') );

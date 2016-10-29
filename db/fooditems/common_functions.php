@@ -90,3 +90,38 @@ function user_owns_fooditem($id,$username,$pdo) {
 	}
 	
 }
+
+
+
+function user_owns_trait($id,$username,$pdo) {
+	
+	$statement = $pdo->prepare("SELECT * FROM traits WHERE id = :id");
+	$statement->bindValue(":id",$id);
+	$trait;
+	
+	if( $statement->execute() ) {
+		
+		$trait = $statement->fetch();
+		
+		if( $trait ) {
+			
+			if( $trait["username"] === $username ) {
+				
+				return true;
+				
+			} else {
+				
+				return false;
+				
+			}
+			
+		}
+		
+	} else {
+		
+		echo "Statement failed";
+		return false;
+		
+	}
+	
+}
