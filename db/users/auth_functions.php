@@ -1,6 +1,6 @@
 <?php
 
-function check_creds($credentials,$user) {
+function check_credentials($credentials,$user) {
 	
 	if( password_verify($credentials["password"],$user["password"]) ) {
 		

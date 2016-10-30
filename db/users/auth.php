@@ -3,7 +3,7 @@ require '../pdo_connect.php';
 require 'common_functions.php';
 require 'auth_functions.php';
 
-function authenticate($credentials) {
+function authenticate_user($credentials) {
 	
 	$pdo = pdo_connect();
 	$user;
@@ -28,7 +28,7 @@ function authenticate($credentials) {
 				
 			}			
 			
-			$authenticated = check_creds($credentials,$user);
+			$authenticated = check_credentials($credentials,$user);
 			
 			if( $authenticated[0] === true ) {
 				

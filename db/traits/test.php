@@ -6,7 +6,7 @@ $data = [
 	"id"=>1,
 	"username"=>"madmax"
 ];
-remove_invalid_fields($data);
+traits_remove_invalid_fields($data);
 var_dump($data); */
 
 require 'update.php';

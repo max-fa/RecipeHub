@@ -1,6 +1,6 @@
 <?php
 
-function get_many($limit,$username,$pdo) {
+function item_get_many($limit,$username,$pdo) {
 	
 	$statement = $pdo->prepare("SELECT * FROM fooditems WHERE username = :username ORDER BY id LIMIT :limit");
 	$statement->bindValue(":username",$username);
@@ -20,7 +20,7 @@ function get_many($limit,$username,$pdo) {
 
 
 
-function get_one($name,$username,$pdo) {
+function item_get_one($name,$username,$pdo) {
 	
 	$result;
 	$statement = $pdo->prepare("SELECT * FROM fooditems WHERE username = :username AND name = :name");
@@ -52,7 +52,7 @@ function get_one($name,$username,$pdo) {
 
 
 
-function get_all($username,$pdo) {
+function item_get_all($username,$pdo) {
 	
 		$statement = $pdo->prepare("SELECT * FROM fooditems WHERE username = :username ORDER BY id");
 		$statement->bindValue(":username",$username);

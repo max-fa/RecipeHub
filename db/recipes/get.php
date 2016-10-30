@@ -2,7 +2,7 @@
 require '../pdo_connect.php';
 require 'common_functions.php';
 
-function get_many($params) {
+function recipes_get_many($params) {
 	
 	$pdo = pdo_connect();
 	$statement;
@@ -55,7 +55,7 @@ function get_many($params) {
 
 
 
-function get_one($id) {
+function recipes_get_one($id) {
 	
 	$pdo = pdo_connect();
 	$statement;

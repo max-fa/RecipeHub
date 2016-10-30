@@ -1,6 +1,6 @@
 <?php
 
-function validate_values($recipe) {
+function recipes_validate_values($recipe) {
 	
 	if( !( strlen($recipe["title"]) <= 75 ) ) {
 		
@@ -40,7 +40,7 @@ function is_of_type($type,$var) {
 
 
 
-function correct_types($recipe) {
+function recipes_correct_types($recipe) {
 	
 	if( !is_of_type("string",$recipe["title"]) ) {
 		
@@ -78,7 +78,7 @@ function correct_types($recipe) {
 
 
 
-function has_fields($recipe) {
+function recipes_has_fields($recipe) {
 	
 	if( array_key_exists("title",$recipe) ) {
 		
@@ -126,18 +126,18 @@ function has_fields($recipe) {
 
 function validate_recipe($recipe) {
 	
-	$has_fields = has_fields($recipe);
-	$correct_types;
+	$recipes_has_fields = recipes_has_fields($recipe);
+	$recipes_correct_types;
 	$valid_values;
 	
-	if( $has_fields[0] === true ) {
+	if( $recipes_has_fields[0] === true ) {
 		
-		$correct_types = correct_types($recipe);
+		$recipes_correct_types = recipes_correct_types($recipe);
 		
 		
-		if( $correct_types[0] === true ) {
+		if( $recipes_correct_types[0] === true ) {
 			
-			$valid_values = validate_values($recipe);
+			$valid_values = recipes_validate_values($recipe);
 			
 			if( $valid_values[0] ) {
 				
@@ -151,13 +151,13 @@ function validate_recipe($recipe) {
 			
 		} else {
 		
-			return $correct_types;
+			return $recipes_correct_types;
 			
 		}
 		
 	} else {
 		
-		return $has_fields;
+		return $recipes_has_fields;
 		
 	}
 	

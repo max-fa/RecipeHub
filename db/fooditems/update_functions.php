@@ -1,6 +1,6 @@
 <?php
 
-function build_query($updates,$pdo) {
+function item_build_query($updates,$pdo) {
 	
 	$statement = "UPDATE fooditems SET (";
 	end($updates);
@@ -52,7 +52,7 @@ function build_query($updates,$pdo) {
 	
 }
 
-function bindValues($updates,$id,&$statement) {
+function item_bindValues($updates,$id,&$statement) {
 
 	foreach( $updates as $column=>$value  ) {
 		
@@ -66,7 +66,7 @@ function bindValues($updates,$id,&$statement) {
 
 
 
-function remove_dups($id,&$updates,$pdo) {
+function item_remove_dups($id,&$updates,$pdo) {
 	
 	$fooditem;
 	$statement = $pdo->prepare("SELECT * FROM fooditems WHERE id = :id");
@@ -100,7 +100,7 @@ function remove_dups($id,&$updates,$pdo) {
 
 
 
-function remove_invalid_fields(&$updates) {
+function item_remove_invalid_fields(&$updates) {
 	
 	$bad_fields = ["id","username"];
 	

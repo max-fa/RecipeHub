@@ -16,7 +16,7 @@ function get_fooditems($params) {
 				
 				if( $params["count"] > 1 ) {
 					
-					$results = get_many( $params["count"], $params["username"], $pdo );
+					$results = item_get_many( $params["count"], $params["username"], $pdo );
 					
 					if( $results ) {
 						
@@ -33,7 +33,7 @@ function get_fooditems($params) {
 					
 					if( isset($params["name"]) && gettype($params["name"]) === "string" ) {
 						
-						$results = get_one( $params["name"], $params["username"], $pdo );
+						$results = item_get_one( $params["name"], $params["username"], $pdo );
 						
 						if( $results !== false ) {
 							
@@ -59,7 +59,7 @@ function get_fooditems($params) {
 				
 			} else {
 				
-				$results = get_all($params["username"],$pdo);
+				$results = item_get_all($params["username"],$pdo);
 				
 				if( $results ) {
 					

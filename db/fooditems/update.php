@@ -20,8 +20,8 @@ function update_fooditem($id,$updates,$username) {
 			
 			if( $user_is_owner ) {
 				
-				remove_invalid_fields($updates);
-				remove_dups($id,$updates,$pdo);
+				item_remove_invalid_fields($updates);
+				item_remove_dups($id,$updates,$pdo);
 				
 				if( isset($updates["name"]) ) {
 					
@@ -40,8 +40,8 @@ function update_fooditem($id,$updates,$username) {
 					
 				} else {
 					
-					$statement = $pdo->prepare( build_query($updates,$pdo) );
-					bindValues($updates,$id,$statement);
+					$statement = $pdo->prepare( item_build_query($updates,$pdo) );
+					item_bindValues($updates,$id,$statement);
 					
 					if( $statement->execute() ) {
 						

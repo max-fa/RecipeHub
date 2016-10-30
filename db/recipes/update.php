@@ -20,9 +20,9 @@ function update_recipe($id,$updates,$user_id) {
 			
 			if( $user_is_owner ) {
 				
-				$statement = $pdo->prepare( build_query($updates,$pdo) );
+				$statement = $pdo->prepare( recipes_build_query($updates,$pdo) );
 				
-				bindValues($updates,$id,$statement);
+				recipes_bindValues($updates,$id,$statement);
 				
 				if( $statement->execute() ) {
 					

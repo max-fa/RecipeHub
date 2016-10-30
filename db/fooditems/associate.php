@@ -12,7 +12,7 @@ function associate_trait($fooditem_id,$trait_id,$username) {
 		
 		if( fooditem_is_real($fooditem_id,$pdo) && trait_is_real($trait_id,$pdo) ) {
 			
-			if( user_is_owner_both($fooditem_id,$trait_id,$username,$pdo) ) {
+			if( trait_user_is_owner_both($fooditem_id,$trait_id,$username,$pdo) ) {
 				
 				if( not_already_associated($fooditem_id,$trait_id,$pdo) ) {
 					

@@ -1,6 +1,6 @@
 <?php
 
-function build_query($updates,$pdo) {
+function recipes_build_query($updates,$pdo) {
 	
 	$statement = "UPDATE recipes SET (";
 	end($updates);
@@ -42,7 +42,7 @@ function build_query($updates,$pdo) {
 	
 }
 
-function bindValues($updates,$id,&$statement) {
+function recipes_bindValues($updates,$id,&$statement) {
 	
 	foreach( $updates as $column=>$value  ) {
 		

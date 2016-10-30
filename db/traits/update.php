@@ -20,8 +20,8 @@ function update_trait($id,$updates,$username) {
 			
 			if( $user_is_owner ) {
 				
-				remove_invalid_fields($updates);
-				remove_dups($id,$updates,$pdo);
+				traits_remove_invalid_fields($updates);
+				traits_remove_dups($id,$updates,$pdo);
 				
 				if( isset($updates["name"]) ) {
 					
@@ -40,8 +40,8 @@ function update_trait($id,$updates,$username) {
 					
 				} else {
 					
-					$statement = $pdo->prepare( build_query($updates,$pdo) );
-					bindValues($updates,$id,$statement);
+					$statement = $pdo->prepare( traits_build_query($updates,$pdo) );
+					traits_bindValues($updates,$id,$statement);
 					
 					if( $statement->execute() ) {
 						

@@ -57,7 +57,7 @@ function not_already_associated($fooditem_id,$trait_id,$pdo) {
 
 
 
-function user_is_owner_both($item_id,$trait_id,$username,$pdo) {
+function trait_user_is_owner_both($item_id,$trait_id,$username,$pdo) {
 	
 	$user_owns_item = user_owns_fooditem($item_id,$username,$pdo);
 	$user_owns_trait = user_owns_trait($trait_id,$username,$pdo);
