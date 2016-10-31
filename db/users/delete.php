@@ -1,6 +1,5 @@
 <?php
 require '../pdo_connect.php';
-require 'common_functions.php';
 
 function delete_user($username) {
 	
@@ -9,25 +8,16 @@ function delete_user($username) {
 	
 	if( $pdo ) {
 		
-		if( user_exists($username,$pdo) ) {
+		$statement = $pdo->prepare("DELETE FROM users WHERE username = :username");
+		$statement->bindValue(":username",$username);
+		
+		if( $statement->execute() ) {
 			
-			$statement = $pdo->prepare("DELETE FROM users WHERE username = :username");
-			$statement->bindValue(":username",$username);
-			
-			if( $statement->execute() ) {
-				
-				return true;
-				
-			} else {
-				
-				echo "Could not delete user";
-				return false;
-				
-			}
+			return true;
 			
 		} else {
 			
-			echo "User: '" . $username . "' doesn't exist";
+			echo "Could not delete user";
 			return false;
 			
 		}

@@ -1,50 +1,25 @@
 <?php
 require '../pdo_connect.php';
 require 'update_functions.php';
-require 'common_functions.php';
 
-function update_recipe($id,$updates,$user_id) {
+function update_recipe($id,$updates) {
 	
 	$pdo = pdo_connect();
 	$statement;
-	$recipe_exists;
-	$user_is_owner;
 	
 	if( $pdo ) {
+				
+		$statement = $pdo->prepare( recipes_build_query($updates,$pdo) );
 		
-		$recipe_exists = recipe_exists($id,$pdo);
+		recipes_bindValues($updates,$id,$statement);
 		
-		if( $recipe_exists ) {
+		if( $statement->execute() ) {
 			
-			$user_is_owner = user_owns_recipe($id,$user_id,$pdo);
-			
-			if( $user_is_owner ) {
-				
-				$statement = $pdo->prepare( recipes_build_query($updates,$pdo) );
-				
-				recipes_bindValues($updates,$id,$statement);
-				
-				if( $statement->execute() ) {
-					
-					return true;
-					
-				} else {
-					
-					echo "Could not update";
-					return false;
-					
-				}
-				
-			} else {
-				
-				echo "This ain't yours!";
-				return false;
-				
-			}
+			return true;
 			
 		} else {
 			
-			echo "That recipe doesn't exist";
+			echo "Could not update";
 			return false;
 			
 		}

@@ -6,7 +6,6 @@ require 'create_functions.php';
 function create_recipe($recipe) {
 	
 	$pdo = pdo_connect();
-	$valid_recipe = validate_recipe($recipe);
 	$insert;
 	$statement = $pdo->prepare("INSERT INTO recipes (title,ingredients,instructions,published,user_id) VALUES(:title,:ingredients,:instructions,:published,:user_id)");
 	$statement->bindValue(":title",$recipe["title"]);
@@ -17,25 +16,16 @@ function create_recipe($recipe) {
 	
 	if( $pdo ) {
 		
-		if( $valid_recipe[0] === true ) {
+		$insert = $statement->execute();
+		
+		if( $insert !== false ) {
 			
-			$insert = $statement->execute();
-			
-			if( $insert !== false ) {
-				
-				return true;
-				
-			} else {
-				
-				echo $statement->errorCode();
-				echo $statement->errorInfo()[2];
-				return false;
-				
-			}			
+			return true;
 			
 		} else {
 			
-			echo $valid_recipe[1];
+			echo $statement->errorCode();
+			echo $statement->errorInfo()[2];
 			return false;
 			
 		}		

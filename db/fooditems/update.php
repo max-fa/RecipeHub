@@ -1,71 +1,24 @@
 <?php
 require '../pdo_connect.php';
 require 'update_functions.php';
-require 'common_functions.php';
 
 function update_fooditem($id,$updates,$username) {
 	
 	$pdo = pdo_connect();
 	$statement;
-	$fooditem_exists;
-	$user_is_owner;
 	
 	if( $pdo ) {
 		
-		$fooditem_exists = fooditem_is_real($id,$pdo);
+		$statement = $pdo->prepare( item_build_query($updates,$pdo) );
+		item_bindValues($updates,$id,$statement);
 		
-		if( $fooditem_exists ) {
+		if( $statement->execute() ) {
 			
-			$user_is_owner = user_owns_fooditem($id,$username,$pdo);
-			
-			if( $user_is_owner ) {
-				
-				item_remove_invalid_fields($updates);
-				item_remove_dups($id,$updates,$pdo);
-				
-				if( isset($updates["name"]) ) {
-					
-					if( unique_fooditem_name( $username,$updates["name"],$pdo ) === false ) {
-						
-						echo "Different name";
-						return false;
-						
-					}
-					
-				}
-				
-				if( count($updates) === 0 ) {
-					
-					return true;
-					
-				} else {
-					
-					$statement = $pdo->prepare( item_build_query($updates,$pdo) );
-					item_bindValues($updates,$id,$statement);
-					
-					if( $statement->execute() ) {
-						
-						return true;
-						
-					} else {
-						
-						print_r( $pdo->errorInfo() );
-						return false;
-						
-					}					
-					
-				}
-				
-			} else {
-				
-				echo "This ain't yours!";
-				return false;
-				
-			}
+			return true;
 			
 		} else {
 			
-			echo "That fooditem doesn't exist";
+			print_r( $pdo->errorInfo() );
 			return false;
 			
 		}
