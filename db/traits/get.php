@@ -1,85 +1,58 @@
 <?php
 require '../pdo_connect.php';
-require 'get_functions.php';
 
-function get_traits($params) {
+function traits_get_all($username) {
 	
 	$pdo = pdo_connect();
-	$results;
 	$statement;
 	
 	if( $pdo ) {
 		
-		if( isset( $params["username"] ) && gettype( $params["username"] )  === "string" ) {
+		$statement = $pdo->prepare("SELECT * FROM traits WHERE username = :username ORDER BY id");
+		$statement->bindValue(":username",$username);
+		
+		if( $statement->execute() ) {
 			
-			if( isset( $params["count"] ) && gettype( $params["count"] ) === "integer" ) {
-				
-				if( $params["count"] > 1 ) {
-					
-					$results = traits_get_many( $params["count"], $params["username"], $pdo );
-					
-					if( $results ) {
-						
-						return $results;
-						
-					} else {
-						
-						echo "Could not fetch traits";
-						return false;
-						
-					}				
-					
-				} else if( $params["count"] === 1 ) {
-					
-					if( isset($params["name"]) && gettype($params["name"]) === "string" ) {
-						
-						$results = traits_get_one( $params["name"], $params["username"], $pdo );
-						
-						if( $results !== false ) {
-							
-							return $results;
-							
-						} else {
-							
-							echo "Could not fetch trait";
-							return false;
-							
-						}					
-						
-					} else {
-						
-						echo "Specific trait name is required";
-						return false;
-						
-					}
-
-					
-				}
-
-				
-			} else {
-				
-				$results = traits_get_all($params["username"],$pdo);
-				
-				if( $results ) {
-					
-					return $results;
-					
-				} else {
-					
-					echo "Could not get user's traits";
-					return false;
-					
-				}
-				
-			}			
+			return $statement->fetchAll(PDO::FETCH_ASSOC);
 			
 		} else {
 			
-			echo "Must provide a username";
+			echo "Could not fetch traits";
 			return false;
 			
 		}
+		
+	} else {
+		
+		echo "Could not connect to database";
+		return false;
+		
+	}
+	
+}
+
+
+
+function traits_get_one($id) {
+	
+	$pdo = pdo_connect();
+	$statement;
+	
+	if( $pdo ) {
+		
+			$statement = $pdo->prepare("SELECT * FROM traits WHERE id = :id");
+			$statement->bindValue(":id",$id);
+			
+			if( $statement->execute() ) {
+				
+				return $statement->fetch(PDO::FETCH_ASSOC);
+				
+			} else {
+				
+				echo "Could not get trait";
+				return false;
+				
+			}
 		
 	} else {
 		
