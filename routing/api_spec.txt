@@ -1,0 +1,30 @@
+API Functionality Overview:
+	Recipes:
+		get one(auth protected),
+		get many,
+		get all from user(auth protected),
+		delete one(auth protected),
+		update one(auth protected),
+		create one(auth protected),
+		publish one(auth protected)
+	Users:
+		get one(auth protected),
+		delete one(auth protected),
+		update one(auth protected),
+		create one,
+		validate one,
+		log one out(auth protected)
+	Fooditems:
+		get one(auth protected),
+		get all from user(auth protected),
+		delete one(auth protected),
+		update one(auth protected),
+		create one(auth protected),
+		associate one(auth protected)
+	Traits:
+		get one(auth protected),
+		get all from user(auth protected),
+		delete one(auth protected),
+		update one(auth protected),
+		create one(auth protected)
+	

@@ -1,0 +1,88 @@
+API v1:
+	Specs:
+		url-centric: yes,
+		json-centric: no,
+		nested ids: no,
+		nested routes: yes,
+		longest route: 3,
+		fully compliant with specification: yes
+	
+	Usage:
+		Recipes:
+			get one:
+				GET /recipes/{#id}
+				payload: { action: "get_one",auth_key: [user-associated key here] }
+			get many:
+				GET /recipes/{#limit}
+				payload: { action: "limit_by" }
+			get all from user:
+				GET /recipes/{#user_id}
+				payload: { action: "from_user",auth_key: [user-associated key here] }
+			delete one:
+				DELETE /recipes/{#id}
+				payload: { auth_key: [user-associated key here] }
+			update one:
+				PUT /recipes/{#id}
+				payload: { changes: [random array of changes],auth_key: [user-associated key here] }
+			create one:
+				POST /recipes
+				payload: { action: "create",recipe_data: [recipe data to be inserted],auth_key: [user-associated key here] }
+			publish one:
+				POST /recipes/{#id}
+				payload: { action: "publish",auth_key: [user-associated key here] }
+				
+		Users:
+			get one:
+				GET /users/{#id}
+				payload: { auth_key: [user-associated key here] }
+			delete one:
+				DELETE /users/{#id}
+				payload: { auth_key: [user-associated key here] }
+			update one:
+				PUT /users/{#id}
+				payload: { changes: [random changes to be made to user],auth_key: [user-associated key here] }
+			create one:
+				POST /users
+			validate one:
+				POST /login
+				payload: { credentials: [username,password] }
+			log one out:
+				POST /logout
+				payload: { auth_key: [user-associated key here] }
+				
+		Fooditems:
+			get one:
+				GET /fooditems/{#id}
+				payload: { action: "get_one",auth_key: [user-associated key here] }
+			get all from user:
+				GET /fooditems/{#user_id}
+				payload: { action: "from_user",auth_key: [user-associated key here] }
+			delete one:
+				DELETE /fooditems/{#id}
+				payload: { auth_key: [user-associated key here] }
+			update one:
+				PUT /fooditems/{#id}
+				payload: { auth_key: [user-associated key here] }
+			create one:
+				POST /fooditems
+				payload: { data: [data to create fooditem here],auth_key: [user-associated key here] }
+			associate one:
+				POST /fooditems/{#id}/{#trait_id}
+				payload: { changes: [changes to be made to fooditem],auth_key: [user-associated key here] }
+
+		Traits:
+			get one:
+				GET /traits/{#id}
+				payload: { action: "get_one",auth_key: [user-associated key here] }
+			get all from user:
+				GET /traits/{#user_id}
+				payload: { action: "from_user",auth_key: [user-associated key here] }
+			delete one:
+				DELETE /traits/{#id}
+				payload: { auth_key: [user-associated key here] }
+			update one:
+				PUT /traits/{#id}
+				payload: { changes: [changes to be applied to trait],auth_key: [user-associated key here] }
+			create one:
+				POST /traits
+				payload: { data: [data to create new trait],auth_key: [user-associated key here] }
