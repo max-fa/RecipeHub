@@ -43,7 +43,7 @@ function run() {
 	
 	foreach( $request_handler_mappings as $route ) {
 		
-		if( $request["method"] === strtoupper($route["method"]) ) {
+		if( $request["method"] === strtoupper($route["method"]) || $route["method"] === "*" ) {
 			
 			if( has_query_params($request["uri"]) ) {
 				

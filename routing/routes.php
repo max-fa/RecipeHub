@@ -20,15 +20,57 @@ register_route("/recipes",function($request) {
 	switch( $request["action"] ) {
 		
 		case "one":
-			echo json_encode( ["recipe"=>"just the one"] );
+			
+			if( isset($request["recipe_id"]) ) {
+				
+				if( is_numeric( $request["recipe_id"] ) ) {
+					
+					echo "Get recipe with id: " . $request["recipe_id"];
+					
+				} else {
+					
+					echo "400";
+					
+				}	
+				
+			} else {
+				
+				echo "400";
+				
+			}
+			
 			break;
 			
 		case "many":
+		
+			if( isset($request["limit"]) ) {
+				
+				if( is_numeric( $request["limit"] ) ) {
+					
+					echo "Limit by: " . $request["limit"];
+					
+				} else {
+					
+					echo "400";
+					
+				}	
+				
+			} else {
+				
+				echo "400";
+				
+			}
 			
 			break;
 			
 		case "from_user":
-			
+			echo json_encode([
+				"recipes"=>[
+					["title"=>"one"],
+					["title"=>"three"]
+				],
+				"count"=>2
+			]);
 			break;
 			
 		default:
