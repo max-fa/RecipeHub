@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 
 function create_trait($trait_data) {
 	
@@ -23,6 +23,10 @@ function create_trait($trait_data) {
 			return false;
 			
 		}
+		
+	} else {
+		
+		return [false,"Could not connect to the database"];
 		
 	}
 	

@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 require 'create_functions.php';
 
 
@@ -32,8 +32,7 @@ function create_recipe($recipe) {
 		
 	} else {
 		
-		echo "Could not connect to the database";
-		return false;
+		return [false,"Could not connect to the database"];
 		
 	}
 	

@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 
 function create_user($data) {
 	

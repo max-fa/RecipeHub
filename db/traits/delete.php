@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 
 function delete_trait($id,$username) {
 	
@@ -24,8 +24,7 @@ function delete_trait($id,$username) {
 		
 	} else {
 		
-		echo "Could not connect to the database";
-		return false;
+		return [false,"Could not connect to the database"];
 		
 	}
 

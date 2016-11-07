@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 
 function recipes_get_all() {
 	
@@ -23,8 +23,7 @@ function recipes_get_all() {
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to database"];
 		
 	}
 	
@@ -55,8 +54,7 @@ function recipes_get_one($id) {
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to database"];
 		
 	}
 	

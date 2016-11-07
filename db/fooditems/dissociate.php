@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 require 'common_functions.php';
 
 function dissociate_trait($fooditem_id,$trait_id,$username) {
@@ -25,8 +25,7 @@ function dissociate_trait($fooditem_id,$trait_id,$username) {
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to the database"];
 		
 	}
 	

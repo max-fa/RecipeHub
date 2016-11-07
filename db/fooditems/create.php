@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 
 function create_fooditem($fooditem_data) {
 	
@@ -26,8 +26,7 @@ function create_fooditem($fooditem_data) {
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to the database"];
 		
 	}
 	

@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 require 'update_functions.php';
 
 function update_fooditem($id,$updates,$username) {
@@ -25,8 +25,7 @@ function update_fooditem($id,$updates,$username) {
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to the database"];
 		
 	}
 	

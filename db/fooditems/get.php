@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 
 function fooditems_get_all($username) {
 	
@@ -24,8 +24,7 @@ function fooditems_get_all($username) {
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to the database"];
 		
 	}
 	
@@ -56,8 +55,7 @@ function fooditems_get_one($id) {
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to the database"];
 		
 	}
 	

@@ -1,5 +1,5 @@
 <?php
-require '../pdo_connect.php';
+require '../db/pdo_connect.php';
 require 'common_functions.php';
 require 'auth_functions.php';
 
