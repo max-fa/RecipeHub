@@ -9,19 +9,28 @@ function dissociate_trait($fooditem_id,$trait_id,$username) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare("DELETE FROM item_traits_mappings WHERE item_id = :item_id AND trait_id = :trait_id");
-		$statement->bindValue(":item_id",$fooditem_id);
-		$statement->bindValue(":trait_id",$trait_id);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("DELETE FROM item_traits_mappings WHERE item_id = :item_id AND trait_id = :trait_id");
+			$statement->bindValue(":item_id",$fooditem_id);
+			$statement->bindValue(":trait_id",$trait_id);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not dissociate recipe from trait"];
+				
+			}
 			
-			return false;
+		} catch( PDOException $e ) {
+			
+			return [false,"Database error"];
 			
 		}
+		
 		
 	} else {
 		

@@ -1,34 +1,37 @@
 <?php
 require '../db/pdo_connect.php';
-require 'create_functions.php';
 
 
 function create_recipe($recipe) {
 	
 	$pdo = pdo_connect();
-	$insert;
-	$statement = $pdo->prepare("INSERT INTO recipes (title,ingredients,instructions,published,user_id) VALUES(:title,:ingredients,:instructions,:published,:user_id)");
-	$statement->bindValue(":title",$recipe["title"]);
-	$statement->bindValue(":ingredients",$recipe["ingredients"]);
-	$statement->bindValue(":instructions",$recipe["instructions"]);
-	$statement->bindValue(":published",$recipe["published"]);
-	$statement->bindValue(":user_id",$recipe["user_id"]);
 	
 	if( $pdo ) {
 		
-		$insert = $statement->execute();
-		
-		if( $insert !== false ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("INSERT INTO recipes (title,ingredients,instructions,published,user_id) VALUES(:title,:ingredients,:instructions,:published,:user_id)");
+			$statement->bindValue(":title",$recipe["title"]);
+			$statement->bindValue(":ingredients",$recipe["ingredients"]);
+			$statement->bindValue(":instructions",$recipe["instructions"]);
+			$statement->bindValue(":published",$recipe["published"]);
+			$statement->bindValue(":user_id",$recipe["user_id"]);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not create recipe"];
+				
+			}
 			
-			echo $statement->errorCode();
-			echo $statement->errorInfo()[2];
-			return false;
+		} catch( PDOException $e ) {
 			
-		}		
+			return [false,"Database error"];
+			
+		}
 		
 	} else {
 		

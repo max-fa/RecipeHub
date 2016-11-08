@@ -12,46 +12,51 @@ function authenticate_user($credentials) {
 	
 	if( $pdo ) {
 		
-		if( user_exists($credentials["username"],$pdo) ) {
+		try {
 			
-			$statement = $pdo->prepare("SELECT * FROM users WHERE username = :username");
-			$statement->bindValue(":username",$credentials["username"]);
-			
-			if( $statement->execute() ) {
+			if( user_exists($credentials["username"],$pdo) ) {
 				
-				$user = $statement->fetch(PDO::FETCH_ASSOC);	
+				$statement = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+				$statement->bindValue(":username",$credentials["username"]);
+				
+				if( $statement->execute() ) {
+					
+					$user = $statement->fetch(PDO::FETCH_ASSOC);	
+					
+				} else {
+					
+					return [false,"Database error: could not process user information"];
+					
+				}			
+				
+				$authenticated = check_credentials($credentials,$user);
+				
+				if( $authenticated[0] === true ) {
+					
+					return [true];
+					
+				} else {
+					
+					return $authenticated;
+					
+				}
 				
 			} else {
 				
-				echo "Database error,could not authenticate user";
-				return false;
+				return [false,"Could not find user: " . $credentials["username"]];
 				
 			}			
 			
-			$authenticated = check_credentials($credentials,$user);
+		} catch( PDOException $e ) {
 			
-			if( $authenticated[0] === true ) {
-				
-				return true;
-				
-			} else {
-				
-				echo $authenticated[1];
-				return false;
-				
-			}
-			
-		} else {
-			
-			echo "Could not find user: " . $credentials["username"];
-			return false;
+			return [false,"Database error"];
 			
 		}
+
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to database"];
 		
 	}
 	

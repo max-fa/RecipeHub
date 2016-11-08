@@ -9,19 +9,28 @@ function update_fooditem($id,$updates,$username) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare( item_build_query($updates,$pdo) );
-		item_bindValues($updates,$id,$statement);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare( item_build_query($updates,$pdo) );
+			item_bindValues($updates,$id,$statement);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return true;
+				
+			} else {
+				
+				print_r( $pdo->errorInfo() );
+				return false;
+				
+			}			
 			
-			print_r( $pdo->errorInfo() );
-			return false;
+		} catch( PDOException $e ) {
+			
+			return [false,"Could not update fooditem"];
 			
 		}
+
 		
 	} else {
 		

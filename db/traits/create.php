@@ -8,21 +8,29 @@ function create_trait($trait_data) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare("INSERT INTO traits (name,description,username) VALUES(:name,:description,:username)");
-		$statement->bindValue(":name",$trait_data["name"]);
-		$statement->bindValue(":description",$trait_data["description"]);
-		$statement->bindValue(":username",$trait_data["username"]);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("INSERT INTO traits (name,description,username) VALUES(:name,:description,:username)");
+			$statement->bindValue(":name",$trait_data["name"]);
+			$statement->bindValue(":description",$trait_data["description"]);
+			$statement->bindValue(":username",$trait_data["username"]);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not create trait"];
+				
+			}			
 			
-			echo "Could not create trait";
-			return false;
+		} catch( PDOException $e ) {
+			
+			return [false,"Database error"];
 			
 		}
+
 		
 	} else {
 		

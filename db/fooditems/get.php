@@ -1,6 +1,31 @@
 <?php
 require '../db/pdo_connect.php';
 
+function get($params) {
+	
+	try {
+		
+		if( isset( $params["single"] ) ) {
+			
+			return fooditems_get_one( $params["user_id"] );
+			
+		} else {
+			
+			return fooditems_get_all( $params["user_id"] );
+			
+		}
+		
+	} catch( PDOException $e ) {
+		
+		return [false,"Database error"];
+		
+	}
+	
+	
+}
+
+
+
 function fooditems_get_all($username) {
 	
 	$pdo = pdo_connect();
@@ -17,8 +42,7 @@ function fooditems_get_all($username) {
 			
 		} else {
 			
-			echo "Could not fetch fooditems";
-			return false;
+			return [false,"Could not fetch fooditems"];
 			
 		}
 		
@@ -48,8 +72,7 @@ function fooditems_get_one($id) {
 				
 			} else {
 				
-				echo "Could not get fooditem";
-				return false;
+				return [false,"Could not get fooditem"];
 				
 			}
 		

@@ -9,17 +9,24 @@ function update_trait($id,$updates,$username) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare( traits_build_query($updates,$pdo) );
-		traits_bindValues($updates,$id,$statement);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare( traits_build_query($updates,$pdo) );
+			traits_bindValues($updates,$id,$statement);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not update trait"];
+				
+			}			
 			
-			print_r( $pdo->errorInfo() );
-			return false;
+		} catch( PDOException $e ) {
+			
+			return [false,"Database error"];
 			
 		}
 		

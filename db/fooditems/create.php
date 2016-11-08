@@ -8,21 +8,29 @@ function create_fooditem($fooditem_data) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare("INSERT INTO fooditems (name,description,username) VALUES(:name,:description,:username)");
-		$statement->bindValue(":name",$fooditem_data["name"]);
-		$statement->bindValue(":description",$fooditem_data["description"]);
-		$statement->bindValue(":username",$fooditem_data["username"]);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("INSERT INTO fooditems (name,description,username) VALUES(:name,:description,:username)");
+			$statement->bindValue(":name",$fooditem_data["name"]);
+			$statement->bindValue(":description",$fooditem_data["description"]);
+			$statement->bindValue(":username",$fooditem_data["username"]);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not create fooditem."];
+				
+			}
 			
-			echo "Could not create fooditem";
-			return false;
+		} catch( PDOException $e ) {
+			
+			return [false,"Database error"];
 			
 		}
+		
 		
 	} else {
 		

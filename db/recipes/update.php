@@ -8,19 +8,26 @@ function update_recipe($id,$updates) {
 	$statement;
 	
 	if( $pdo ) {
+		
+		try {
+			
+			$statement = $pdo->prepare( recipes_build_query($updates,$pdo) );
+			
+			recipes_bindValues($updates,$id,$statement);
+			
+			if( $statement->execute() ) {
 				
-		$statement = $pdo->prepare( recipes_build_query($updates,$pdo) );
-		
-		recipes_bindValues($updates,$id,$statement);
-		
-		if( $statement->execute() ) {
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not update the recipe"];
+				
+			}
 			
-			return true;
+		} catch( PDOException $e ) {
 			
-		} else {
-			
-			echo "Could not update";
-			return false;
+			return [false,"Database error"];
 			
 		}
 		

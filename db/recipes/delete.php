@@ -1,6 +1,5 @@
 <?php
 require '../db/pdo_connect.php';
-require 'common_functions.php';
 
 function delete_recipe($id) {
 	
@@ -9,24 +8,31 @@ function delete_recipe($id) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare("DELETE FROM recipes WHERE id = :id");
-		$statement->bindValue(":id",$id);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("DELETE FROM recipes WHERE id = :id");
+			$statement->bindValue(":id",$id);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not the delete recipe"];
+				
+			}
 			
-			echo "Could not delete the recipe";
-			return false;
+		} catch( PDOException $e ) {
 			
-		}		
+			return [false,"Database error"];
+			
+		}
+				
 		
 	} else {
 		
-		echo "Could not connect to the database";
-		return false;
+		return [false,"Could not connect to database"]
 		
 	}
 

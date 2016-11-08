@@ -8,19 +8,26 @@ function delete_fooditem($id) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare("DELETE FROM fooditems WHERE id = :id");
-		$statement->bindValue(":id",$id);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("DELETE FROM fooditems WHERE id = :id");
+			$statement->bindValue(":id",$id);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not delete fooditem"];
+				
+			}
 			
-			echo "Could not delete the fooditem";
-			return false;
+		} catch( PDOException $e ) {
 			
-		}		
+			return [false,"Database error"];
+			
+		}
 		
 	} else {
 		

@@ -1,6 +1,31 @@
 <?php
 require '../db/pdo_connect.php';
 
+function get($params) {
+	
+	try {
+		
+		if( isset( $params["single"] ) ) {
+			
+			return traits_get_one( $params["user_id"] );
+			
+		} else {
+			
+			return traits_get_all( $params["user_id"] );
+			
+		}
+		
+	} catch( PDOException $e ) {
+		
+		return [false,"Database error"];
+		
+	}
+	
+	
+}
+
+
+
 function traits_get_all($username) {
 	
 	$pdo = pdo_connect();
@@ -9,7 +34,7 @@ function traits_get_all($username) {
 	if( $pdo ) {
 		
 		$statement = $pdo->prepare("SELECT * FROM traits WHERE username = :username ORDER BY id");
-		$statement->bindValue(":username",$username);
+		$statement->bindValue(":username",$useername);
 		
 		if( $statement->execute() ) {
 			
@@ -17,8 +42,7 @@ function traits_get_all($username) {
 			
 		} else {
 			
-			echo "Could not fetch traits";
-			return false;
+			return [false,"Could not fetch traits"];
 			
 		}
 		
@@ -48,8 +72,7 @@ function traits_get_one($id) {
 				
 			} else {
 				
-				echo "Could not get trait";
-				return false;
+				return [false,"Could not get trait"];
 				
 			}
 		

@@ -8,24 +8,30 @@ function delete_user($username) {
 	
 	if( $pdo ) {
 		
-		$statement = $pdo->prepare("DELETE FROM users WHERE username = :username");
-		$statement->bindValue(":username",$username);
-		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("DELETE FROM users WHERE username = :username");
+			$statement->bindValue(":username",$username);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not delete user"];
+				
+			}			
 			
-			echo "Could not delete user";
-			return false;
+		} catch( PDOException $e ) {
+			
+			return [false,"Database error"];
 			
 		}
 		
 	} else {
 		
-		echo "Could not connect to database";
-		return false;
+		return [false,"Could not connect to database"];
 		
 	}
 	

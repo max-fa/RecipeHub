@@ -7,20 +7,28 @@ function delete_trait($id,$username) {
 	$statement;
 	
 	if( $pdo ) {
-			
-		$statement = $pdo->prepare("DELETE FROM traits WHERE id = :id");
-		$statement->bindValue(":id",$id);
 		
-		if( $statement->execute() ) {
+		try {
 			
-			return true;
+			$statement = $pdo->prepare("DELETE FROM traits WHERE id = :id");
+			$statement->bindValue(":id",$id);
 			
-		} else {
+			if( $statement->execute() ) {
+				
+				return [true];
+				
+			} else {
+				
+				return [false,"Could not delete trait"];
+				
+			}			
 			
-			echo "Could not delete the trait";
-			return false;
+		} catch( PDOException $e ) {
 			
-		}		
+			return [false,"Database error"];
+			
+		}
+		
 		
 	} else {
 		
