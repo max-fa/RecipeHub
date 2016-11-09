@@ -15,80 +15,127 @@ register_route("/",function() {
 
 register_route("/recipes",function($request) {
 	
+	require '../db/pdo_connect.php';
 	require '../db/recipes/get.php';
+	require 'validators/recipes/retrieval_validators.php';
 	
-	switch( $request["action"] ) {
+	$pdo = pdo_connect();
+	$valid;
+	$response;
+	$int_request;
+	
+	if( $pdo ) {
 		
-		case "one":
-			
-			if( isset($request["recipe_id"]) ) {
-				
-				if( is_numeric( $request["recipe_id"] ) ) {
-					
-					echo "Get recipe with id: " . $request["recipe_id"];
-					
-				} else {
-					
-					echo "400";
-					
-				}	
-				
-			} else {
-				
-				echo "400";
-				
-			}
-			
-			break;
-			
-		case "many":
+		$valid = valid_get_one_request($request,$pdo);
 		
-			if( isset($request["limit"]) ) {
-				
-				if( is_numeric( $request["limit"] ) ) {
-					
-					echo "Limit by: " . $request["limit"];
-					
-				} else {
-					
-					echo "400";
-					
-				}	
-				
-			} else {
-				
-				echo "400";
-				
-			}
+		try {
 			
-			break;
+			switch( $request["action"] ) {
+				
+				case "one":
+					
+					if( $valid[0] === true ) {
+						
+						header('Content-type:application/json;charset=utf-8');
+						
+						$parsed_request = [
+							"user_id"=>(int)$request["user_id"],
+							"recipe_id"=>(int)$request["recipe_id"]
+						];
+						
+						$response = get($parsed_request,$pdo);
+						
+						if( $response[0] === true ) {
+							
+							echo json_encode(
+								[
+									"success"=>true,
+									"recipe"=>$response[1]
+								]
+							);
+							
+						} else {
+							
+							echo json_encode(
+								[
+									"success"=>false,
+									"why"=>$response[1]
+								]
+							);
+							
+						}
+						
+					} else {
+						
+						http_response_code(400);
+						echo json_encode(
+							[
+								"success"=>false,
+								"why"=>$valid[1]
+							]
+						);
+						
+					}
+					
+					break;
+					
+				case "many":
+					
+					if( recipes_valid_get_many($request) ) {
+						
+						header('Content-type:application/json;charset=utf-8');
+						return get($request);
+						
+					} else {
+						
+						echo '400';
+						
+					}
+					
+					break;
+					
+				case "from_user":
+					
+					if( recipes_valid_get_from_user($request) ) {
+						
+						header('Content-type:application/json;charset=utf-8');
+						return get($request);
+						
+					} else {
+						
+						echo '400';
+						
+					}
+					
+					break;
+					
+				default:
+					//return a Bad Request error
+					break;
+				
+			}			
 			
-		case "from_user":
+		} catch( PDOException $e ) {
+			
 			echo json_encode([
-				"recipes"=>[
-					["title"=>"one"],
-					["title"=>"three"]
-				],
-				"count"=>2
+				"success"=>false,
+				"why"=>"Database error"
 			]);
-			break;
 			
-		default:
-			//return a Bad Request error
-			break;
+		}
 		
-	}
-	
-	/* if( $recipes ) {
-		
-		header('Content-type:application/json;charset=utf-8');
-		echo json_encode($recipes);
 		
 	} else {
 		
-		echo json_encode("Could not fetch recipes");
+		http_response_code(500);
 		
-	} */
+		echo json_encode([
+			"success"=>false,
+			"why"=>"Could not connect to database"
+		]);
+		
+	}
+
 	
 },"GET",false);
 

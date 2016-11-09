@@ -1,41 +1,32 @@
 <?php
-require '../db/pdo_connect.php';
+//require '../db/pdo_connect.php';
 
-function get($params) {
+function get($params,$pdo) {
 
-	try {
-		
 		if( isset( $params["user_id"] ) ) {
 			
-			return recipes_get_from_user($params["user_id"]);
+			return recipes_get_from_user($params["user_id"],$pdo);
 			
 		} else {
 			
-			if( $params["limit"] > 1 ) {
+			if( isset( $params["limit"] ) ) {
 				
-				return recipes_get_many($params["limit"]);
+				return recipes_get_many($params["limit"],$pdo);
 				
 			} else {
 				
-				return recipes_get_one($params["recipe_id"]);
+				return recipes_get_one($params["recipe_id"],$pdo);
 				
 			}
 			
-		}		
-		
-	} catch( PDOException $e ) {
-		
-		return [false,"Database error"];
-		
-	}
+		}
 	
 }
 
 
 
-function get_from_user($user_id) {
+function recipes_get_from_user($user_id,$pdo) {
 	
-	$pdo = pdo_connect();
 	$statement;
 	
 	if( $pdo ) {
@@ -62,9 +53,8 @@ function get_from_user($user_id) {
 	
 }
 
-function recipes_get_many($limit) {
+function recipes_get_many($limit,$pdo) {
 	
-	$pdo = pdo_connect();
 	$statement;
 	
 	if( $pdo ) {
@@ -92,9 +82,8 @@ function recipes_get_many($limit) {
 
 
 
-function recipes_get_one($id) {
+function recipes_get_one($id,$pdo) {
 	
-	$pdo = pdo_connect();
 	$statement;
 	
 	if( $pdo ) {
