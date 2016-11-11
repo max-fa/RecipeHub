@@ -1,6 +1,6 @@
 <?php
 
-function create_fooditem($fooditem_data) {
+function create_fooditem($fooditem_data,$pdo) {
 	
 	$statement = $pdo->prepare("INSERT INTO fooditems (name,description) VALUES(:name,:description)");
 	$statement->bindValue(":name",$fooditem_data["name"]);

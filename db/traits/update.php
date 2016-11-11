@@ -1,7 +1,7 @@
 <?php
 require 'update_functions.php';
 
-function update_trait($id,$updates) {
+function update_trait($id,$updates,$pdo) {
 	
 	$statement = $pdo->prepare( traits_build_query($updates,$pdo) );
 	traits_bindValues($updates,$id,$statement);

@@ -1,39 +1,18 @@
 <?php
-require '../db/pdo_connect.php';
 
-function delete_fooditem($id) {
+function delete_fooditem($id,$pdo) {
 	
-	$pdo = pdo_connect();
-	$statement;
+	$statement = $pdo->prepare("DELETE FROM fooditems WHERE id = :id");
+	$statement->bindValue(":id",$id);
 	
-	if( $pdo ) {
+	if( $statement->execute() ) {
 		
-		try {
-			
-			$statement = $pdo->prepare("DELETE FROM fooditems WHERE id = :id");
-			$statement->bindValue(":id",$id);
-			
-			if( $statement->execute() ) {
-				
-				return [true];
-				
-			} else {
-				
-				return [false,"Could not delete fooditem"];
-				
-			}
-			
-		} catch( PDOException $e ) {
-			
-			return [false,"Database error"];
-			
-		}
+		return [true];
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		return [false,"Could not delete fooditem"];
 		
 	}
-
 	
 }

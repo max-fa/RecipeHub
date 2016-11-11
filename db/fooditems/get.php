@@ -1,14 +1,14 @@
 <?php
 
-function get($params) {
+function fooditems_get($params,$pdo) {
 	
-	if( isset( $params["all"] ) ) {
+	if( isset( $params["item_id"] ) ) {
 		
-		return fooditems_get_all();
+		return fooditems_get_one($params["item_id"],$pdo);
 		
 	} else {
 		
-		return fooditems_get_one($params["id"]);
+		return fooditems_get_all($pdo);
 		
 	}
 	
@@ -16,7 +16,7 @@ function get($params) {
 
 
 
-function fooditems_get_all() {
+function fooditems_get_all($pdo) {
 	
 	$statement = $pdo->prepare("SELECT * FROM fooditems ORDER BY id");
 	
@@ -34,7 +34,7 @@ function fooditems_get_all() {
 
 
 
-function fooditems_get_one($id) {
+function fooditems_get_one($id,$pdo) {
 	
 	$statement = $pdo->prepare("SELECT * FROM fooditems WHERE id = :id");
 	$statement->bindValue(":id",$id);
@@ -45,7 +45,7 @@ function fooditems_get_one($id) {
 		
 	} else {
 		
-		return [false,"Could not get fooditem"];
+		return false;
 		
 	}
 	

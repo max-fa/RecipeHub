@@ -115,17 +115,44 @@ register_route("/recipes",function($request) {
 
 register_route("/fooditems",function($request) {
 	
-	if( $request["action"] === "one" ) {
+	header('Content-type:application/json;charset:utf-8');
+	require 'handlers/fooditems/get.php';
+	
+	if( !isset( $request["action"] ) ) {
 		
+		http_response_code(400);
+		echo json_encode([
+			"success"=>false,
+			"why"=>"Tell us what you want!!"
+		]);
+		return;
 		
+	}
+	
+	switch( $request["action"] ) {
 		
-	} else if( $request["action"] === "from_user" ) {
-		
-		
-		
-	} else {
-		
-		/* Bad Request */
+		case "one":
+			
+			get_one_item($request);
+			
+			break;
+			
+		case "many":
+			
+			unset($request["item_id"]);
+			get_all_items($request);
+			
+			break;
+			
+		default:
+			
+			http_response_code(400);
+			echo json_encode([
+				"success"=>false,
+				"why"=>"You don't want that!"
+			]);
+			
+			break;
 		
 	}
 	
@@ -135,26 +162,57 @@ register_route("/fooditems",function($request) {
 
 register_route("/fooditems",function($request) {
 	
+	header('Content-type:application/json;charset:utf-8');
+	
+	if( !isset( $request["action"] ) ) {
+		
+		http_response_code(400);
+		echo json_encode([
+			"success"=>false,
+			"why"=>"Tell us what you want!!"
+		]);
+		return;
+		
+	}
+	
 	switch( $request["action"] ) {
 		
 		case "create":
+			
+			require 'handlers/fooditems/create.php';
+			create_item_handler($request);
 			
 			break;
 			
 		case "update":
 			
+			require 'handlers/fooditems/update.php';
+			update_item_handler($request);
+			
 			break;
 			
 		case "associate":
+			
+			require 'handlers/fooditems/associate.php';
+			associate_item_handler($request);
 			
 			break;
 			
 		case "dissociate":
 			
+			require 'handlers/fooditems/dissociate.php';
+			dissociate_item_handler($request);
+			
 			break;
 			
 		default:
-			/* Bad Request */
+			
+			http_response_code(400);
+			echo json_encode([
+				"success"=>false,
+				"why"=>"You don't want that!"
+			]);
+			
 			break;
 		
 	}
@@ -165,7 +223,9 @@ register_route("/fooditems",function($request) {
 
 register_route("/fooditems",function($request) {
 	
-	
+	header('Content-type:application/json;charset:utf-8');
+	require 'handlers/fooditems/delete.php';
+	delete_item_handler($request);
 	
 },"DELETE");
 
@@ -173,17 +233,44 @@ register_route("/fooditems",function($request) {
 
 register_route("/traits",function($request) {
 	
-	if( $request["action"] === "one" ) {
+	header('Content-type:application/json;charset:utf-8');
+	require 'handlers/traits/get.php';
+	
+	if( !isset( $request["action"] ) ) {
 		
+		http_response_code(400);
+		echo json_encode([
+			"success"=>false,
+			"why"=>"Tell us what you want!!"
+		]);
+		return;
 		
+	}
+	
+	switch( $request["action"] ) {
 		
-	} else if( $request["action"] === "from_user" ) {
-		
-		
-		
-	} else {
-		
-		/* Bad Request */
+		case "one":
+			
+			get_one_trait($request);
+			
+			break;
+			
+		case "many":
+			
+			unset($request["trait_id"]);
+			get_all_traits($request);
+			
+			break;
+			
+		default:
+			
+			http_response_code(400);
+			echo json_encode([
+				"success"=>false,
+				"why"=>"You don't want that!"
+			]);
+			
+			break;
 		
 	}
 	
@@ -193,17 +280,44 @@ register_route("/traits",function($request) {
 
 register_route("/traits",function($request) {
 	
-	if( $request["action"] === "create" ) {
+	header('Content-type:application/json;charset:utf-8');
+	
+	if( !isset( $request["action"] ) ) {
 		
+		http_response_code(400);
+		echo json_encode([
+			"success"=>false,
+			"why"=>"Tell us what you want!!"
+		]);
+		return;
 		
+	}
+	
+	switch( $request["action"] ) {
 		
-	} else if( $request["action"] === "update" ) {
-		
-		
-		
-	} else {
-		
-		/* Bad Request */
+		case "create":
+			
+			require 'handlers/traits/create.php';
+			create_trait_handler($request);
+			
+			break;
+			
+		case "update":
+			
+			require 'handlers/traits/update.php';
+			update_trait_handler($request);
+			
+			break;
+			
+		default:
+			
+			http_response_code(400);
+			echo json_encode([
+				"success"=>false,
+				"why"=>"You don't want that!"
+			]);
+			
+			break;
 		
 	}
 	
@@ -213,6 +327,9 @@ register_route("/traits",function($request) {
 
 register_route("/traits",function($request) {
 	
+	header('Content-type:application/json;charset:utf-8');
+	require 'handlers/traits/delete.php';
+	delete_trait_handler($request);
 	
 	
 },"DELETE");

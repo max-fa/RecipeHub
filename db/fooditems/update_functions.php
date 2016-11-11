@@ -1,6 +1,6 @@
 <?php
 
-function item_build_query($updates,$pdo) {
+function item_build_query($updates) {
 	
 	$statement = "UPDATE fooditems SET (";
 	end($updates);

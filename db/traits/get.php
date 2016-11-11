@@ -1,6 +1,6 @@
 <?php
 
-function get($params) {
+function traits_get($params,$pdo) {
 	
 	if( isset( $params["trait_id"] ) ) {
 		
