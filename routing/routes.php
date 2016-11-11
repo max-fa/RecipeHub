@@ -5,7 +5,7 @@ register_route("/",function() {
 	//require '../views/index.php';
 	echo "Welcome";
 	
-},null);
+},"*");
 
 
 /* 
@@ -15,34 +15,42 @@ register_route("/",function() {
 
 register_route("/recipes",function($request) {
 	
+	header('Content-type:application/json;charset:utf-8');
+	
+	if( !isset( $request["action"] ) ) {
+		
+		http_response_code(400);
+		echo json_encode([
+			"success"=>false,
+			"why"=>"Tell us what you want!!"
+		]);
+		return;
+		
+	}
+	
 	switch( $request["action"] ) {
 		
 		case "one":
 			
-			require 'handlers/recipes/get_handlers.php';
-			
+			require 'handlers/recipes/get.php';
 			get_one_recipe($request);
 			
 			break;
 			
 		case "many":
 			
-			require 'handlers/recipes/get_handlers.php';
-			
+			require 'handlers/recipes/get.php';
 			get_many_recipes($request);
-			
-			break;
-			
-		case "from_user":
-			
-			require 'handlers/recipes/get_handlers.php';
-			
-			get_user_recipes($request);
 			
 			break;
 			
 		default:
 			
+			http_response_code(400);
+			echo json_encode([
+				"success"=>false,
+				"why"=>"You don't want that!"
+			]);
 			
 			break;
 		
@@ -54,22 +62,39 @@ register_route("/recipes",function($request) {
 
 register_route("/recipes",function($request) {
 	
+	header('Content-type:application/json;charset:utf-8');
+	
+	if( !isset( $request["action"] ) ) {
+		
+		http_response_code(400);
+		echo json_encode([
+			"success"=>false,
+			"why"=>"Tell us what you want!!"
+		]);
+		return;
+		
+	}
+	
 	switch( $request["action"] ) {
 		
 		case "create":
-			
+			require 'handlers/recipes/create.php';
+			create_recipe_handler($request);
 			break;
 		
 		case "update":
-			
-			break;
-			
-		case "publish":
-			
+			require 'handlers/recipes/update.php';
+			update_recipe_handler($request);
 			break;
 			
 		default:
-			//Bad Request
+			
+			http_response_code(400);
+			echo json_encode([
+				"success"=>false,
+				"why"=>"You don't want that"
+			]);
+			
 			break;
 		
 	}
@@ -80,65 +105,11 @@ register_route("/recipes",function($request) {
 
 register_route("/recipes",function($request) {
 	
-	//require '../db/recipes/delete.php';
-	
-	/* delete recipe here */
-	
-},"DELETE");
-
-
-
-register_route("/users",function($request) {
-	
-	//require '../db/users/get.php';
-	
-	/* get a user */
-	
-},"GET");
-
-
-
-register_route("/users",function($request) {
-	
-	if( $request["action"] === "create" ) {
-		
-		//require '../db/users/create.php';
-		
-	} else if( $request["action"] === "update" ) {
-		
-		//require '../db/users/update.php';
-		
-	} else {
-		
-		/* Bad Request */
-		
-	}
-	
-},"POST");
-
-
-
-register_route("/users",function($request) {
-	
-	//require '../db/users/delete.php';
+	require 'handlers/recipes/delete.php';
+	header('Content-type:applications/json;charset=utf-8');
+	delete_recipe_handler($request);
 	
 },"DELETE");
-
-
-
-register_route("/login",function($request) {
-	
-	//require '../db/users/get.php';
-	
-},"POST");
-
-
-
-register_route("/logout",function($request) {
-	
-	//require '../db/users/get.php';
-	
-},"POST");
 
 
 

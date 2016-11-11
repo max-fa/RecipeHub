@@ -6,25 +6,7 @@ function register_route($uri,callable $handler,$method) {
 	
 	global $request_handler_mappings;
 	
-	if( gettype($uri) === "string" ) {
-		
-		if( isset($method) && gettype($method) === "string" ) {
-			
-			array_push( $request_handler_mappings,[ "uri"=>$uri,"method"=>$method,"handler"=>$handler ] );
-			return true;
-			
-		} else {
-			
-			array_push( $request_handler_mappings,[ "uri"=>$uri,"method"=>"*","handler"=>$handler ] );
-			return true;
-			
-		}		
-		
-	} else {
-		
-		return false;
-		
-	}
+	array_push( $request_handler_mappings,[ "uri"=>$uri,"method"=>$method,"handler"=>$handler ] );
 	
 }
 
@@ -39,29 +21,32 @@ function run() {
 	"method"=>$_SERVER["REQUEST_METHOD"]
 	];
 	$matched = false;
-	$request_uri;
+	
+	if( strpos($request["uri"],"?") ) {
+		
+		$dequeried_uri = remove_query_string($request["uri"]);
+		
+	} else {
+		
+		$dequeried_uri = $request["uri"];
+		
+	}
 	
 	foreach( $request_handler_mappings as $route ) {
 		
-		if( $request["method"] === strtoupper($route["method"]) || $route["method"] === "*" ) {
+		if( $dequeried_uri === $route["uri"] || $dequeried_uri === $route["uri"] . "/" ) {
 			
-			if( has_query_params($request["uri"]) ) {
+			if( $request["method"] === strtoupper($route["method"]) || $route["method"] === "*" ) {
 				
-				$request_uri = basic_uri($request["uri"]);
-				
-				if( $request_uri === $route["uri"] || $request_uri === $route["uri"] . "/" ) {
+				if( $request["method"] === "GET" ) {
 					
 					$matched = true;
 					$route["handler"]($_GET);
 					
-				}
-				
-			} else {
-				
-				if( $request["uri"] === $route["uri"] || $request["uri"] === $route["uri"] . "/" ) {
+				} else {
 					
 					$matched = true;
-					$route["handler"]( file_get_contents("php://input") );
+					$route["handler"]( json_decode(file_get_contents("php://input"),true ) );
 					
 				}
 				

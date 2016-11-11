@@ -1,40 +1,19 @@
 <?php
-require '../db/pdo_connect.php';
 require 'update_functions.php';
 
-function update_fooditem($id,$updates,$username) {
+function update_fooditem($id,$updates) {
 	
-	$pdo = pdo_connect();
-	$statement;
+	$statement = $pdo->prepare( item_build_query($updates,$pdo) );
+	item_bindValues($updates,$id,$statement);
 	
-	if( $pdo ) {
+	if( $statement->execute() ) {
 		
-		try {
-			
-			$statement = $pdo->prepare( item_build_query($updates,$pdo) );
-			item_bindValues($updates,$id,$statement);
-			
-			if( $statement->execute() ) {
-				
-				return true;
-				
-			} else {
-				
-				print_r( $pdo->errorInfo() );
-				return false;
-				
-			}			
-			
-		} catch( PDOException $e ) {
-			
-			return [false,"Could not update fooditem"];
-			
-		}
-
+		return true;
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		print_r( $pdo->errorInfo() );
+		return false;
 		
 	}
 	

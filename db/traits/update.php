@@ -1,38 +1,18 @@
 <?php
-require '../db/pdo_connect.php';
 require 'update_functions.php';
 
-function update_trait($id,$updates,$username) {
+function update_trait($id,$updates) {
 	
-	$pdo = pdo_connect();
-	$statement;
+	$statement = $pdo->prepare( traits_build_query($updates,$pdo) );
+	traits_bindValues($updates,$id,$statement);
 	
-	if( $pdo ) {
+	if( $statement->execute() ) {
 		
-		try {
-			
-			$statement = $pdo->prepare( traits_build_query($updates,$pdo) );
-			traits_bindValues($updates,$id,$statement);
-			
-			if( $statement->execute() ) {
-				
-				return [true];
-				
-			} else {
-				
-				return [false,"Could not update trait"];
-				
-			}			
-			
-		} catch( PDOException $e ) {
-			
-			return [false,"Database error"];
-			
-		}
+		return true;
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		return false;
 		
 	}
 	

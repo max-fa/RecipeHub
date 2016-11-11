@@ -1,54 +1,32 @@
 <?php
-require '../db/pdo_connect.php';
 
 function get($params) {
 	
-	try {
+	if( isset( $params["all"] ) ) {
 		
-		if( isset( $params["single"] ) ) {
-			
-			return fooditems_get_one( $params["user_id"] );
-			
-		} else {
-			
-			return fooditems_get_all( $params["user_id"] );
-			
-		}
+		return fooditems_get_all();
 		
-	} catch( PDOException $e ) {
+	} else {
 		
-		return [false,"Database error"];
+		return fooditems_get_one($params["id"]);
 		
 	}
-	
 	
 }
 
 
 
-function fooditems_get_all($username) {
+function fooditems_get_all() {
 	
-	$pdo = pdo_connect();
-	$statement;
+	$statement = $pdo->prepare("SELECT * FROM fooditems ORDER BY id");
 	
-	if( $pdo ) {
+	if( $statement->execute() ) {
 		
-		$statement = $pdo->prepare("SELECT * FROM fooditems WHERE username = :username ORDER BY id");
-		$statement->bindValue(":username",$useername);
-		
-		if( $statement->execute() ) {
-			
-			return $statement->fetchAll(PDO::FETCH_ASSOC);
-			
-		} else {
-			
-			return [false,"Could not fetch fooditems"];
-			
-		}
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		return false;
 		
 	}
 	
@@ -58,27 +36,16 @@ function fooditems_get_all($username) {
 
 function fooditems_get_one($id) {
 	
-	$pdo = pdo_connect();
-	$statement;
+	$statement = $pdo->prepare("SELECT * FROM fooditems WHERE id = :id");
+	$statement->bindValue(":id",$id);
 	
-	if( $pdo ) {
+	if( $statement->execute() ) {
 		
-			$statement = $pdo->prepare("SELECT * FROM fooditems WHERE id = :id");
-			$statement->bindValue(":id",$id);
-			
-			if( $statement->execute() ) {
-				
-				return $statement->fetch(PDO::FETCH_ASSOC);
-				
-			} else {
-				
-				return [false,"Could not get fooditem"];
-				
-			}
+		return $statement->fetch(PDO::FETCH_ASSOC);
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		return [false,"Could not get fooditem"];
 		
 	}
 	

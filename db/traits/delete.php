@@ -1,40 +1,18 @@
 <?php
-require '../db/pdo_connect.php';
 
-function delete_trait($id,$username) {
+function delete_trait($id,$pdo) {
 	
-	$pdo = pdo_connect();
-	$statement;
+	$statement = $pdo->prepare("DELETE FROM traits WHERE id = :id");
+	$statement->bindValue(":id",$id);
 	
-	if( $pdo ) {
+	if( $statement->execute() ) {
 		
-		try {
-			
-			$statement = $pdo->prepare("DELETE FROM traits WHERE id = :id");
-			$statement->bindValue(":id",$id);
-			
-			if( $statement->execute() ) {
-				
-				return [true];
-				
-			} else {
-				
-				return [false,"Could not delete trait"];
-				
-			}			
-			
-		} catch( PDOException $e ) {
-			
-			return [false,"Database error"];
-			
-		}
-		
+		return true;
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		return false;
 		
 	}
-
 	
 }

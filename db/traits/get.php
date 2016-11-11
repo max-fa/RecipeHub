@@ -1,54 +1,14 @@
 <?php
-require '../db/pdo_connect.php';
 
 function get($params) {
 	
-	try {
+	if( isset( $params["trait_id"] ) ) {
 		
-		if( isset( $params["single"] ) ) {
-			
-			return traits_get_one( $params["user_id"] );
-			
-		} else {
-			
-			return traits_get_all( $params["user_id"] );
-			
-		}
-		
-	} catch( PDOException $e ) {
-		
-		return [false,"Database error"];
-		
-	}
-	
-	
-}
-
-
-
-function traits_get_all($username) {
-	
-	$pdo = pdo_connect();
-	$statement;
-	
-	if( $pdo ) {
-		
-		$statement = $pdo->prepare("SELECT * FROM traits WHERE username = :username ORDER BY id");
-		$statement->bindValue(":username",$useername);
-		
-		if( $statement->execute() ) {
-			
-			return $statement->fetchAll(PDO::FETCH_ASSOC);
-			
-		} else {
-			
-			return [false,"Could not fetch traits"];
-			
-		}
+		return traits_get_one( $params["trait_id"],$pdo );
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		return traits_get_all($pdo);
 		
 	}
 	
@@ -56,29 +16,36 @@ function traits_get_all($username) {
 
 
 
-function traits_get_one($id) {
+function traits_get_all($pdo) {
 	
-	$pdo = pdo_connect();
-	$statement;
+	$statement = $pdo->prepare("SELECT * FROM traits ORDER BY id");
 	
-	if( $pdo ) {
+	if( $statement->execute() ) {
 		
-			$statement = $pdo->prepare("SELECT * FROM traits WHERE id = :id");
-			$statement->bindValue(":id",$id);
-			
-			if( $statement->execute() ) {
-				
-				return $statement->fetch(PDO::FETCH_ASSOC);
-				
-			} else {
-				
-				return [false,"Could not get trait"];
-				
-			}
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
 		
 	} else {
 		
-		return [false,"Could not connect to the database"];
+		return false;
+		
+	}
+	
+}
+
+
+
+function traits_get_one($id,$pdo) {
+	
+	$statement = $pdo->prepare("SELECT * FROM traits WHERE id = :id");
+	$statement->bindValue(":id",$id);
+	
+	if( $statement->execute() ) {
+		
+		return $statement->fetch(PDO::FETCH_ASSOC);
+		
+	} else {
+		
+		return false;
 		
 	}
 	
