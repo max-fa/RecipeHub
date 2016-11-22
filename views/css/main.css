@@ -1,0 +1,202 @@
+/*
+	Start: App-wide
+*/
+
+	/* default styling for buttons app-wide */
+	button {
+		background: #3498db;
+		background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+		background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+		background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+		background-image: -o-linear-gradient(top, #3498db, #2980b9);
+		background-image: linear-gradient(to bottom, #3498db, #2980b9);
+		-webkit-border-radius: 28;
+		-moz-border-radius: 28;
+		border-radius: 28px;
+		font-family: Arial;
+		color: #ffffff;
+		font-size: 15px;
+		padding: 3px 4px 3px 4px;
+		text-decoration: none;	
+	}
+
+	/* default styling for when you hover over buttons app-wide */
+	button:hover {
+		background: #3cb0fd;
+		background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+		text-decoration: none;
+	}
+
+/*
+	End: App-wide
+*/
+
+
+
+/* 
+	Start: List-view 
+*/
+	
+	
+	/* positioning the ul elements containing recipe,traits, and fooditems */
+	.list {
+		text-align: center;
+		list-style: none;
+	}
+	
+	
+	
+	.recipe:hover {
+		color: blue;
+	}
+	
+	
+	
+	.fooditem:hover {
+		color: blue;
+	}
+	
+	
+	
+	.trait:hover {
+		color: blue;
+	}
+	
+	
+	
+	/* 
+		list-view filters and buttons
+	*/
+	
+	/* the labels next to input fields */
+	.control-labels {
+		background: #3498db;
+		background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+		background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+		background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+		background-image: -o-linear-gradient(top, #3498db, #2980b9);
+		background-image: linear-gradient(to bottom, #3498db, #2980b9);
+		-webkit-border-radius: 28;
+		-moz-border-radius: 28;
+		border-radius: 28px;
+		font-family: Arial;
+		color: #ffffff;
+		font-size: 15px;
+		padding: 3px 4px 3px 4px;
+		text-decoration: none;	
+	}
+	
+	
+	/* the div containing the input field and label for filtering list-items based on user input text */
+	#filters-box {
+		margin-left: 490px;
+	}
+	
+	
+	/* the span tag wrapping the filter and label */
+	#search-controls {
+		margin-left: 10px;
+	}
+	
+	
+	/* the div wrapping all buttons and input fields when in list-view */
+	#controls {
+		margin-bottom: 50px;
+		margin-top: 9px;
+	}
+	
+	
+	/* the div wrapping the buttons for creating recipe,traits,and fooditems */
+	#create-buttons {
+		float: right;
+		margin-right: 5px;
+	}
+	
+	
+	/* the container div for the list of fooditems  */
+	#fooditem-list-container {
+		display: none;
+	}
+	
+	
+	/* the container div for the list of traits */
+	#trait-list-container {
+		display: none;
+	}
+	
+/* 
+	End: List-view 
+*/
+
+
+
+/* 
+	Start: Object view
+*/
+	
+	.object-display {
+		width: 65%;
+		margin: 0 auto;
+	}
+	
+	
+	
+	.object-body > p {
+		text-align: center;
+	}
+	
+	
+	/* the sidebar containing traits,ingredients, and instructions in the recipe object-view */
+	.object-sidebar {
+		padding-right: 95px;
+		display: table-cell;
+	}
+	
+	
+	#info-list > ul {
+		padding-bottom: 8px;
+	}
+	
+	
+	/* object-body specifically for recipe */
+	#recipe-body {
+		display: table-cell;
+	}
+	
+	
+	/* the h3 tag in object-view */
+	.object-title {
+		text-align: center;
+	}
+	
+	
+	/* container for button controls */
+	.object-buttons {
+		margin-right: 25px;
+		text-align: right;
+	}
+	
+	
+	/* button controls */
+	.object-buttons > button {
+		margin-right: 9px;
+	}
+	
+	/* styling for the 'delete' button */
+	.delete-button {
+		background: #e60000;
+	}
+	
+	
+	/* styling for hovering over the 'delete' button */
+	.delete-button:hover {
+		background: #ff1a1a;
+	}
+	
+/* 
+	End: Object view
+*/

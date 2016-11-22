@@ -32,6 +32,14 @@ function run() {
 		
 	}
 	
+	if( strpos($request["uri"],'js') ) {
+		
+		$filename = substr($request["uri"],4);
+		$matched = true;
+		readfile("C:\\xampp\\htdocs\\my_docs\\RecipeHub\\views\\js\\" . $filename);
+		
+	}
+	
 	foreach( $request_handler_mappings as $route ) {
 		
 		if( $dequeried_uri === $route["uri"] || $dequeried_uri === $route["uri"] . "/" ) {

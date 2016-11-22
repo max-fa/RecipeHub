@@ -2,8 +2,7 @@
 
 register_route("/",function() {
 	
-	//require '../views/index.php';
-	echo "Welcome";
+	readfile('C:/xampp/htdocs/my_docs/RecipeHub/views/index.html');
 	
 },"*");
 
@@ -141,6 +140,12 @@ register_route("/fooditems",function($request) {
 			
 			unset($request["item_id"]);
 			get_all_items($request);
+			
+			break;
+			
+		case "traits":
+			
+			get_item_traits($request);
 			
 			break;
 			
@@ -349,7 +354,7 @@ register_route("/css",function() {
 		if( $i >= 2 ) {
 			
 			$output .= "
-				<li>$dir[$i]</li>
+				<li><a href='http://recipehub.dev/css/$dir[$i]'>$dir[$i]</a></li>
 			";
 			
 		}
@@ -361,22 +366,23 @@ register_route("/css",function() {
 	$output .= "</ul>";
 	echo $output;	
 	
-},null);
+},"*");
 
 
 
-register_route("/css/loggedout.css",function() {
+register_route("/css/main.css",function() {
 	
-	header("Content-type: text/css");
-	readfile("../views/css/loggedout.css");
+	header("Content-type:text/css");
+	readfile("../views/css/main.css");
+	echo "bam";
 	
-},null);
+},"*");
 
 
 
 register_route("/css/simplegrid.css",function() {
 	
-	header("Content-type: text/css");
+	header("Content-type:text/css");
 	readfile("../views/css/simplegrid.css");
 	
-},null);
+},"*");

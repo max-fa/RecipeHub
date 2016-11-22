@@ -51,7 +51,7 @@ function get_many_recipes($request) {
 			
 			echo json_encode([
 				"success"=>true,
-				"recipe"=>recipes_get([],$pdo)
+				"recipes"=>recipes_get([],$pdo)
 			]);
 			
 		} catch( PDOException $e ) {

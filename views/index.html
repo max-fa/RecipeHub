@@ -4,23 +4,156 @@
 		<title>Recipehub</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="http://recipehub.dev/css/simplegrid.css">
-		<link rel="stylesheet" href="http://recipehub.dev/css/loggedout.css">
+		<link rel="stylesheet" href="http://recipehub.dev/css/main.css">
+		
+		<script src="http://recipehub.dev/js/jquery-3.1.1.js"></script>
+		
+		<script src="http://recipehub.dev/js/events/recipes/showRecipe.js"></script>
+		<script src="http://recipehub.dev/js/events/recipes/recipeViewEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/recipes/editRecipeEvents.js"></script>
+		
+		<script src="http://recipehub.dev/js/events/fooditems/editItemEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/fooditems/itemViewEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/fooditems/showItem.js"></script>
+		
+		<script src="http://recipehub.dev/js/events/traits/editTraitEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/traits/traitViewEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/traits/showTrait.js"></script>
+		
+		<!-- These modules must always come last,once everything else is loaded -->
+		<script src="http://recipehub.dev/js/init.js"></script>
+		<script src="http://recipehub.dev/js/main.js"></script>
 	</head>
 	<body>
 		<div id="main">
 			<section id="list-view">
 			
 				<div id="controls">
-					<button>Click</button>
+					<div id="create-buttons">
+						<button id="create-recipe-button">Create Recipe</button>
+						<button id="create-fooditem-button">Create Fooditem</button>
+						<button id="create-trait-button">Create Trait</button>
+					</div>
+					<div id="filters-box">
+						<span id="search-controls">
+							<label class="control-labels" for="search">Filter recipes:</label>
+							<input type="search" id="search">
+						</span>
+					</div>
 				</div>
 				
-				<div id="list">
-					@recipe-list
-				</div>
+				<ul id="recipe-list" class="list">
+					<li><b>Recipes</b></li>
+					<br>
+				</ul>
+			
+				<ul id="fooditem-list" class="list">
+					<li id="list-title"><b>Foods</b></li>
+					<br>
+				</ul>
+			
+				<ul id="trait-list" class="list">
+					<li><b>Traits</b></li>
+					<br>
+				</ul>
 				
 			</section>
 			
-			<section>
+			<section id="object-view" style="display: none;">
+			
+				<div id="recipe-display" class="object-display" style="display: none;">
+					<div id="main-recipe-display">
+						<h3 id="recipe-title" class="object-title">Title</h3>
+						<div id="recipe-info-list" class="object-sidebar">
+							<ul id="recipe-ingredients">
+								<li><b>Ingredients</b></li>
+							</ul>
+							
+							<ul id="recipe-traits">
+								<li><b>Traits</b></li>
+							</ul>
+						</div>
+						<div id="recipe-body" class="object-body">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus mi massa, quis condimentum ante sodales sit amet. In a ante eget ex tempus cursus. Aenean non mi sapien. Sed at orci sit amet neque rhoncus convallis. Integer dictum iaculis ex. Aliquam ornare arcu orci, sed condimentum orci rutrum at. Integer accumsan mollis sem sed dictum. Donec vel rhoncus elit, ut ultricies enim. Sed in sapien nisi. Quisque vel sapien neque. Donec nulla libero, tristique sit amet nisi sit amet, interdum cursus lacus. Proin varius feugiat sem, eget dignissim nunc auctor vel. Duis felis odio, facilisis sed ex ac, consectetur fermentum orci. Duis accumsan condimentum efficitur. Maecenas aliquam laoreet nisl, vitae lobortis ligula egestas vitae.\
+						</div>
+						<div class="object-buttons">
+							<button class="delete-button" id="delete-recipe-button">Delete</button>
+							<button id="edit-recipe-button">Edit</button>
+							<button id="recipe-return-button">Return to list view</button>
+						</div>
+					</div>
+					
+					<div id="edit-recipe-form-container" style="display: none;">
+						<form id="edit-recipe-form">
+							<label for="title">Title:</label>
+							<input type="text" id="title">
+							<label for="ingredients">Ingredients:</label>
+							<input type="text" id="ingredients">
+							<label for="instructions">Instructions:</label>
+							<input type="text" id="instructions">
+							
+							<input id="edit-recipe-submit" type="submit" value="Submit">
+							<input id="edit-recipe-return" type="button" value="Return to recipe">
+						</form>
+					</div>	
+				</div>
+				
+				
+				<div id="fooditem-display" class="object-display" style="display: none;">
+					<div id="main-fooditem-display">
+						<h3 id="fooditem-title" class="object-title">Title</h3>
+						<div id="fooditem-info-list" class="object-sidebar">
+							<ul id="fooditem-traits">
+								<li><b>Traits</b></li>
+							</ul>
+						</div>
+						<div id="fooditem-body" class="object-body">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus mi massa, quis condimentum ante sodales sit amet. In a ante eget ex tempus cursus. Aenean non mi sapien. Sed at orci sit amet neque rhoncus convallis. Integer dictum iaculis ex. Aliquam ornare arcu orci, sed condimentum orci rutrum at. Integer accumsan mollis sem sed dictum. Donec vel rhoncus elit, ut ultricies enim. Sed in sapien nisi. Quisque vel sapien neque. Donec nulla libero, tristique sit amet nisi sit amet, interdum cursus lacus. Proin varius feugiat sem, eget dignissim nunc auctor vel. Duis felis odio, facilisis sed ex ac, consectetur fermentum orci. Duis accumsan condimentum efficitur. Maecenas aliquam laoreet nisl, vitae lobortis ligula egestas vitae.</p>
+						</div>
+						<div class="object-buttons">
+							<button class="delete-button" id="delete-fooditem-button">Delete</button>
+							<button id="edit-fooditem-button">Edit</button>
+							<button id="associate-fooditem-button">Associate</button>
+							<button id="fooditem-return-button">Back to list view</button>
+						</div>
+					</div>
+					<div id="edit-fooditem-form-container" style="display: none;">
+						<form id="edit-fooditem-form">
+							<label for="fooditem-name">Name:</label>
+							<input type="text" id="fooditem-name">
+							<label for="fooditem-description">Description:</label>
+							<input type="text" id="fooditem-description">
+							
+							<input id="edit-fooditem-submit" type="submit" value="Submit">
+							<input id="edit-fooditem-return" type="button" value="Return to fooditem">
+						</form>
+					</div>
+				</div>
+				
+				<div id="trait-display" class="object-display" style="display: none;">
+					<div id="main-trait-display">
+						<h3 id="trait-title" class="object-title">Title</h3>
+						<div id="trait-body" class="object-body">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempus mi massa, quis condimentum ante sodales sit amet. In a ante eget ex tempus cursus. Aenean non mi sapien. Sed at orci sit amet neque rhoncus convallis. Integer dictum iaculis ex. Aliquam ornare arcu orci, sed condimentum orci rutrum at. Integer accumsan mollis sem sed dictum. Donec vel rhoncus elit, ut ultricies enim. Sed in sapien nisi. Quisque vel sapien neque. Donec nulla libero, tristique sit amet nisi sit amet, interdum cursus lacus. Proin varius feugiat sem, eget dignissim nunc auctor vel. Duis felis odio, facilisis sed ex ac, consectetur fermentum orci. Duis accumsan condimentum efficitur. Maecenas aliquam laoreet nisl, vitae lobortis ligula egestas vitae.</p>
+						</div>
+						<div class="object-buttons">
+							<button class="delete-button" id="delete-trait-button">Delete</button>
+							<button id="edit-trait-button">Edit</button>
+							<button id="trait-return-button">Back to list view</button>
+						</div>
+					</div>
+					<div id="edit-trait-form-container" style="display: none;">
+						<form id="edit-trait-form">
+							<label for="trait-name">Name:</label>
+							<input type="text" id="trait-name">
+							<label for="trait-description">Description:</label>
+							<input type="text" id="trait-description">
+							
+							<input id="edit-trait-submit" type="submit" value="Submit">
+							<input id="edit-trait-return" type="button" value="Return to trait">
+						</form>
+					</div>
+				</div>
 				
 			</section>
 		</div>
