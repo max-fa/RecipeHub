@@ -203,6 +203,13 @@ register_route("/fooditems",function($request) {
 			
 			break;
 			
+		case "associate_many":
+			
+			require 'handlers/fooditems/associate.php';
+			associate_many_handler($request);
+			
+			break;
+			
 		case "dissociate":
 			
 			require 'handlers/fooditems/dissociate.php';
@@ -219,7 +226,8 @@ register_route("/fooditems",function($request) {
 			]);
 			
 			break;
-		
+
+			
 	}
 	
 },"POST");
@@ -338,6 +346,16 @@ register_route("/traits",function($request) {
 	
 	
 },"DELETE");
+
+
+
+register_route("/relations",function($request) {
+	
+	header('Content-type:application/json;charset:utf-8');
+	require 'handlers/relations.php';
+	fetch_relations();
+	
+},"GET");
 
 /* 
 	End: resource routes

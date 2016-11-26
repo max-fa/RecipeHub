@@ -2,29 +2,9 @@
 
 (function() {
 	
-	/* fetch a recipe from the server and pass it to fetchTraits() */
 	function fetchRecipe(callbackOne,callbackTwo,id) {
 		
-		$.ajax("http://recipehub.dev/recipes?action=one&recipe_id=" + id,{
-			contentType: "text/plain",
-			dataType: "json",
-			cache: true,
-			error: function(xhr,message,code) {
-				
-				console.log({
-					message: message,
-					code: code
-				});
-				
-			},
-			success: function(data,status,xhr) {
-				
-				callbackOne(callbackTwo,data.recipe);
-				
-			},
-			method: "GET"
-			
-		});
+		callbackOne(callbackTwo,Store.getRecipe(id));
 		
 	}
 	
@@ -33,7 +13,7 @@
 	/* fetch all traits that could be associated with a recipe's ingredients and pass the recipe and it's traits to showObjectView() */
 	function fetchTraits(callbackOne,recipe) {
 		
-		$.ajax("http://recipehub.dev/fooditems?action=traits&names=" + recipe.ingredients,{
+		/* $.ajax("http://recipehub.dev/fooditems?action=traits&names=" + recipe.ingredients,{
 			contentType: "text/plain",
 			dataType: "json",
 			cache: true,
@@ -47,21 +27,49 @@
 			},
 			success: function(data,status,xhr) {
 				
-				var newRecipe = Object.assign({},recipe);
-				newRecipe.traits = data.traits;
-				callbackOne(newRecipe);
+				Store.currentObject = Object.assign({traits: data.traits},recipe);
+				callbackOne();
 				
 			},
 			method: "GET"
-		});
-		//recipe.ingredients.split(",");
+		}); */
+		
+		var traits = recipe.ingredients.split(",").map(function(ingredient,index,ingredients) {
+			
+			var fooditem = Store.getFooditem(ingredient);
+			
+			if( fooditem ) {
+				
+				return Store.getTraits(fooditem.id);
+				
+			}
+			
+		}).filter(function(traits,index,traitsArray) {
+			
+			if( traits === undefined ) {
+				
+				return false;
+				
+			} else {
+				
+				return true;
+				
+			}
+			
+		}).flatten();
+		
+		Store.currentObject = Object.assign({traits: traits},recipe);
+		
+		callbackOne();
 		
 	}
 	
 	
 	
 	/* Recieve the recipe data along with any traits it may have and display it */
-	function showObjectView(recipe) {
+	function showObjectView() {
+		
+		var recipe = Store.currentObject;
 		
 		$("#list-view").css("display","none");
 		$("#object-view").css("display","block");
@@ -106,9 +114,7 @@
 	
 	window.showRecipe = function(evt) {
 		
-		var id = $(this).attr("data-recipe_id");
-		//showObjectView(fetchTraits(fetchRecipe()));
-		
+		var id = parseInt(this.getAttribute("data-recipe_id"),10);
 		fetchRecipe(fetchTraits,showObjectView,id);
 		
 	}

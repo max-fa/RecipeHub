@@ -1,41 +1,55 @@
 "use strict";
 
 (function() {
+	
+	function updateListView(id) {
+		
+		$("#trait-list > li.trait").each(function(index,li) {
+			
+			if( parseInt(li.getAttribute("data-trait_id"),10) === id ) {
+				
+				$(this).remove();
+				return false;
+				
+			}
+			
+		})
+		
+	}
+	
+	
 
 	function deleteTrait(evt) {
 		
-		var id = this.getAttribute("data-trait_id");
+		 document.getElementById("object-view").classList.add("busy");
 		
-		/* $.ajax("http://recipehub.dev/recipes?id=" + id,{
-			contentType: "text/plain",
+		$.ajax("http://recipehub.dev/traits",{
+			contentType: "application/json",
 			dataType: "json",
-			cache: true,
+			data: JSON.stringify({
+				trait_id: Store.currentObject.id
+			}),
 			error: function(xhr,message,code) {
 				
 				console.log({
 					message: message,
-					code: code
+					code: code,
+					request: xhr
 				});
 				
 			},
 			success: function(data,status,xhr) {
 				
-				if( data.success ) {
-					
-					console.log("Time to blow this joint");
-					
-				} else {
-					
-					console.log("This joint ain't gonna blow");
-					
-				}
+				Store.deleteTrait(Store.currentObject.id);
+				Store.deleteMappingsByTrait(Store.currentObject.id);
+				updateListView(Store.currentObject.id);
+				Store.currentObject = null;
+				returnToListView();
+				document.getElementById("object-view").classList.remove("busy");
 				
 			},
 			method: "DELETE"
-		}); */
-		console.log(this);
-		console.log(id);
-		alert("Deleting trait");
+		});
 		
 	}
 	

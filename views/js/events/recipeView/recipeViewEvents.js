@@ -55,43 +55,56 @@
 		alert("Showing trait");
 		
 	}
+	
+	
+	
+	function updateListView(id) {
+		
+		$("#recipe-list > li.recipe").each(function(index,li) {
+			
+			if( parseInt(li.getAttribute("data-recipe_id"),10) === id ) {
+				
+				$(this).remove();
+				return false;
+				
+			}
+			
+		})
+		
+	}
 
 
 
 	function deleteRecipe(evt) {
 		
-		var id = this.getAttribute("data-recipe-id");
+		document.getElementById("object-view").classList.add("busy");
 		
-		/* $.ajax("http://recipehub.dev/recipes?id=" + id,{
-			contentType: "text/plain",
+		$.ajax("http://recipehub.dev/recipes",{
+			contentType: "application/json",
 			dataType: "json",
-			cache: true,
+			data: JSON.stringify({
+				recipe_id: Store.currentObject.id
+			}),
 			error: function(xhr,message,code) {
 				
 				console.log({
 					message: message,
-					code: code
+					code: code,
+					request: xhr
 				});
 				
 			},
 			success: function(data,status,xhr) {
 				
-				if( data.success ) {
-					
-					console.log("Time to blow this joint");
-					
-				} else {
-					
-					console.log("This joint ain't gonna blow");
-					
-				}
+				Store.deleteRecipe(Store.currentObject.id);
+				updateListView(Store.currentObject.id);
+				Store.currentObject = null;
+				returnToListView();
+				document.getElementById("object-view").classList.remove("busy");
 				
 			},
 			method: "DELETE"
-		}); */
-		console.log(this);
-		console.log(id);
-		alert("Deleting recipe");
+		});
 		
 	}
 	
@@ -109,18 +122,15 @@
 	
 	function returnToListView(evt) {
 		
-		//disable all click event listeners on buttons
 		$("#delete-recipe-button").off("click");
 		$("#edit-recipe-button").off("click");
 		$("#return-button").off("click");
 		
-		//empty out all text
 		$("#recipe-title").html("");
 		$("#recipe-body > p").html("");
 		$("#recipe-ingredients > li").filter(".recipe-ingredient").remove();
 		$("#recipe-traits > li").filter(".recipe-trait").remove();
 		
-		//finally switch the views
 		$("#list-view").css("display","block");
 		$("#object-view").css("display","none");
 		$("#recipe-display").css("display","none");

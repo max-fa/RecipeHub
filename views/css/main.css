@@ -30,6 +30,37 @@
 		background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
 		text-decoration: none;
 	}
+	
+	.button-input {
+		background: #3498db;
+		background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+		background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+		background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+		background-image: -o-linear-gradient(top, #3498db, #2980b9);
+		background-image: linear-gradient(to bottom, #3498db, #2980b9);
+		-webkit-border-radius: 28;
+		-moz-border-radius: 28;
+		border-radius: 28px;
+		font-family: Arial;
+		color: #ffffff;
+		font-size: 15px;
+		padding: 3px 4px 3px 4px;
+		text-decoration: none;	
+	}
+	
+	.button-input:hover {
+		background: #3cb0fd;
+		background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+		background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+		text-decoration: none;
+	}
+	
+	.busy {
+		cursor: wait;
+	}
 
 /*
 	End: App-wide
@@ -49,21 +80,19 @@
 	}
 	
 	
-	
 	.recipe:hover {
 		color: blue;
+		cursor: pointer;
 	}
-	
-	
 	
 	.fooditem:hover {
 		color: blue;
+		cursor: pointer;
 	}
-	
-	
 	
 	.trait:hover {
 		color: blue;
+		cursor: pointer;
 	}
 	
 	
@@ -186,6 +215,7 @@
 		margin-right: 9px;
 	}
 	
+	
 	/* styling for the 'delete' button */
 	.delete-button {
 		background: #e60000;
@@ -197,6 +227,135 @@
 		background: #ff1a1a;
 	}
 	
+	
+	/* styling for hovering over the 'delete' button */
+	#associate-fooditem-list > li.trait:hover {
+		cursor: pointer;
+	}
+	
 /* 
 	End: Object view
+*/
+
+/* 
+	Start: Forms
+*/
+
+	#create-recipe-form {
+		text-align: center;
+	}
+	
+	
+	#new-recipe-buttons {
+		display: block;
+		margin-left: 160px;
+	}
+	
+	
+	.new-recipe-control {
+		margin-bottom: 10px;
+	}
+	
+	
+	#new-recipe-title-control {
+		display: block;
+		margin-right: 25px;
+		margin-top: 12px;
+	}
+	
+	
+	#new-recipe-ingredients-control {
+		display: inline-block;
+		margin-left: 10px;
+	}
+	
+	
+	#new-recipe-ingredients-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	
+	
+	#new-recipe-instructions-control {
+		display: inline-block;
+	}
+	
+	
+	#new-recipe-instructions-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	
+	
+	/* fooditems below */
+	
+	#create-fooditem-form {
+		text-align: center;
+	}
+	
+	#new-fooditem-buttons {
+		display: block;
+		margin-left: 160px;
+	}
+	
+	
+	.new-fooditem-control {
+		margin-bottom: 10px;
+	}
+	
+	
+	#new-fooditem-name-control {
+		display: block;
+		margin-right: 25px;
+		margin-top: 12px;
+	}
+	
+	
+	#new-fooditem-description-control {
+		display: inline-block;
+	}
+	
+	
+	#new-fooditem-description-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	
+	
+	/* traits below */
+	
+	#create-trait-form {
+		text-align: center;
+	}
+	
+	#new-trait-buttons {
+		display: block;
+		margin-left: 160px;
+	}
+	
+	
+	.new-trait-control {
+		margin-bottom: 10px;
+	}
+	
+	
+	#new-trait-name-control {
+		display: block;
+		margin-right: 25px;
+		margin-top: 12px;
+	}
+	
+	
+	#new-trait-description-control {
+		display: inline-block;
+	}
+	
+	
+	#new-trait-description-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+ 
+/* 
+	End: Forms
 */

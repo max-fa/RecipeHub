@@ -1,19 +1,19 @@
 <?php
-
-function delete_recipe_handler($request) {
+function fetch_relations() {
 	
 	require '../db/pdo_connect.php';
-	require '../db/recipes/delete.php';
 	$pdo = pdo_connect();
-	
+
 	if( $pdo ) {
 		
 		try {
 			
-			if( delete_recipe((int)$request["recipe_id"],$pdo) ) {
+			$statement = $pdo->prepare("SELECT * FROM item_traits_mappings");
+			if( $statement->execute() ) {
 				
 				echo json_encode([
-					"success"=>true
+					"success"=>true,
+					"relations"=>$statement->fetchAll(PDO::FETCH_ASSOC)
 				]);
 				
 			} else {
@@ -21,7 +21,7 @@ function delete_recipe_handler($request) {
 				http_response_code(500);
 				echo json_encode([
 					"success"=>false,
-					"why"=>"Da'heck do i know?"
+					"why"=>"Couldn't fetch relations"
 				]);
 				
 			}
@@ -41,7 +41,7 @@ function delete_recipe_handler($request) {
 		http_response_code(500);
 		echo json_encode([
 			"success"=>false,
-			"why"=>"Could not connect to database"
+			"why"=>"Couldn't connect to database"
 		]);
 		
 	}

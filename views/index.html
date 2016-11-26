@@ -7,22 +7,27 @@
 		<link rel="stylesheet" href="http://recipehub.dev/css/main.css">
 		
 		<script src="http://recipehub.dev/js/jquery-3.1.1.js"></script>
+		<script src="http://recipehub.dev/js/store.js"></script>
 		
-		<script src="http://recipehub.dev/js/events/recipes/showRecipe.js"></script>
-		<script src="http://recipehub.dev/js/events/recipes/recipeViewEvents.js"></script>
-		<script src="http://recipehub.dev/js/events/recipes/editRecipeEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/recipeView/showRecipe.js"></script>
+		<script src="http://recipehub.dev/js/events/recipeView/recipeViewEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/recipeView/editRecipeEvents.js"></script>
 		
-		<script src="http://recipehub.dev/js/events/fooditems/editItemEvents.js"></script>
-		<script src="http://recipehub.dev/js/events/fooditems/itemViewEvents.js"></script>
-		<script src="http://recipehub.dev/js/events/fooditems/showItem.js"></script>
+		<script src="http://recipehub.dev/js/events/fooditemView/editItemEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/fooditemView/associateFooditemEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/fooditemView/itemViewEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/fooditemView/showItem.js"></script>
 		
-		<script src="http://recipehub.dev/js/events/traits/editTraitEvents.js"></script>
-		<script src="http://recipehub.dev/js/events/traits/traitViewEvents.js"></script>
-		<script src="http://recipehub.dev/js/events/traits/showTrait.js"></script>
+		<script src="http://recipehub.dev/js/events/traitView/editTraitEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/traitView/traitViewEvents.js"></script>
+		<script src="http://recipehub.dev/js/events/traitView/showTrait.js"></script>
+		
+		<script src="http://recipehub.dev/js/events/createRecipe/createRecipe.js"></script>
+		<script src="http://recipehub.dev/js/events/createFooditem/createFooditem.js"></script>
+		<script src="http://recipehub.dev/js/events/createTrait/createTrait.js"></script>
 		
 		<!-- These modules must always come last,once everything else is loaded -->
 		<script src="http://recipehub.dev/js/init.js"></script>
-		<script src="http://recipehub.dev/js/main.js"></script>
 	</head>
 	<body>
 		<div id="main">
@@ -86,11 +91,11 @@
 					<div id="edit-recipe-form-container" style="display: none;">
 						<form id="edit-recipe-form">
 							<label for="title">Title:</label>
-							<input type="text" id="title">
+							<input type="text" name="title">
 							<label for="ingredients">Ingredients:</label>
-							<input type="text" id="ingredients">
+							<input type="text" name="ingredients">
 							<label for="instructions">Instructions:</label>
-							<input type="text" id="instructions">
+							<input type="text" name="instructions">
 							
 							<input id="edit-recipe-submit" type="submit" value="Submit">
 							<input id="edit-recipe-return" type="button" value="Return to recipe">
@@ -120,15 +125,25 @@
 					<div id="edit-fooditem-form-container" style="display: none;">
 						<form id="edit-fooditem-form">
 							<label for="fooditem-name">Name:</label>
-							<input type="text" id="fooditem-name">
+							<input type="text" name="fooditem-name">
 							<label for="fooditem-description">Description:</label>
-							<input type="text" id="fooditem-description">
+							<input type="text" name="fooditem-description">
 							
 							<input id="edit-fooditem-submit" type="submit" value="Submit">
 							<input id="edit-fooditem-return" type="button" value="Return to fooditem">
 						</form>
 					</div>
+					
+					
+					<div id="associate-fooditem-view" style="display: none;">
+						<ul id="associate-fooditem-list">
+							<li id="associate-fooditem-header">Associate with:</li>
+						</ul>
+						<button id="associate-fooditem-submit">Associate</button>
+						<button id="associate-fooditem-return">Return to fooditem</button>
+					</div>
 				</div>
+				
 				
 				<div id="trait-display" class="object-display" style="display: none;">
 					<div id="main-trait-display">
@@ -145,9 +160,9 @@
 					<div id="edit-trait-form-container" style="display: none;">
 						<form id="edit-trait-form">
 							<label for="trait-name">Name:</label>
-							<input type="text" id="trait-name">
+							<input type="text" name="trait-name">
 							<label for="trait-description">Description:</label>
-							<input type="text" id="trait-description">
+							<input type="text" name="trait-description">
 							
 							<input id="edit-trait-submit" type="submit" value="Submit">
 							<input id="edit-trait-return" type="button" value="Return to trait">
@@ -155,6 +170,72 @@
 					</div>
 				</div>
 				
+			</section>
+			
+			<section id="form-view" style="display: none;">
+				<div id="create-recipe-form-container" style="display: none;">
+					<form id="create-recipe-form">
+						<span class="new-recipe-control" id="new-recipe-title-control">
+							<label for="new-recipe-title">Title</label>
+							<input name="new-recipe-title" type="text">
+						</span>
+						
+						<span class="new-recipe-control" id="new-recipe-ingredients-control">
+							<label for="new-recipe-ingredients">Ingredients</label>
+							<textarea name="new-recipe-ingredients" rows="15" cols="20"></textarea>
+						</span>
+						
+						<span class="new-recipe-control" id="new-recipe-instructions-control">
+							<label for="new-recipe-instructions">Instructions</label>
+							<textarea name="new-recipe-instructions" rows="15" cols="20"></textarea>
+						</span>
+						
+						<span id="new-recipe-buttons">
+							<input type="submit" id="create-recipe-submit" class="button-input" value="Create">
+							<input type="button" id="create-recipe-return" class="button-input" value="Return to list view">
+						</span>
+					</form>
+				</div>
+				
+				
+				<div id="create-fooditem-form-container" style="display: none;">
+					<form id="create-fooditem-form">
+						<span class="new-fooditem-control" id="new-fooditem-name-control">
+							<label for="new-fooditem-name">Name</label>
+							<input name="new-fooditem-name" type="text">
+						</span>
+						
+						<span class="new-fooditem-control" id="new-fooditem-description-control">
+							<label for="new-fooditem-description">Description</label>
+							<textarea name="new-fooditem-description" rows="15" cols="20"></textarea>
+						</span>
+						
+						<span id="new-fooditem-buttons">
+							<input type="submit" id="create-fooditem-submit" class="button-input" value="Create">
+							<input type="button" id="create-fooditem-return" class="button-input" value="Return to list view">
+						</span>
+					</form>
+				</div>
+				
+				
+				<div id="create-trait-form-container" style="display: none;">
+					<form id="create-trait-form">
+						<span class="new-trait-control" id="new-trait-name-control">
+							<label for="new-trait-name">Name</label>
+							<input name="new-trait-name" type="text">
+						</span>
+						
+						<span class="new-trait-control" id="new-trait-description-control">
+							<label for="new-trait-description">Description</label>
+							<textarea name="new-trait-description" rows="15" cols="20"></textarea>
+						</span>
+						
+						<span id="new-trait-buttons">
+							<input type="submit" id="create-trait-submit" class="button-input" value="Create">
+							<input type="button" id="create-trait-return" class="button-input" value="Return to list view">
+						</span>
+					</form>
+				</div>
 			</section>
 		</div>
 	</body>

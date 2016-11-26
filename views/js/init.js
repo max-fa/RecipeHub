@@ -1,6 +1,6 @@
 "use strict";
 
-(function() {
+$(document).ready(function() {
 	
 	function frontPageEvents() {
 		
@@ -12,47 +12,19 @@
 			
 		});
 		
+		$("#create-recipe-button").on("click",showCreateRecipeForm);
+		$("#create-fooditem-button").on("click",showCreateFooditemForm);
+		$("#create-trait-button").on("click",showCreateTraitForm);
 		
-		
-		$("#create-recipe-button").on("click",function(evt) {
-			
-			console.log("Click on create recipe button");
-			console.log(evt);
-			console.log(this);
-			
-		});
-		
-		
-		
-		$("#create-fooditem-button").on("click",function(evt) {
-			
-			console.log("Click on create fooditem button");
-			console.log(evt);
-			console.log(this);
-			
-		});
-		
-		
-		
-		$("#create-trait-button").on("click",function(evt) {
-			
-			console.log("Click on create trait button");
-			console.log(evt);
-			console.log(this);
-			
-		});
-		
-		
-		
-		$(".recipe").on("click",showRecipe);
-		$(".fooditem").on("click",showItem);
-		$(".trait").on("click",showTrait);
+		$("#recipe-list").on("click",".recipe",showRecipe);
+		$("#fooditem-list").on("click",".fooditem",showItem);
+		$("#trait-list").on("click",".trait",showTrait);
 		
 	}
 	
 	
 	
-	function initLoadRecipes(callbackOne,callbackTwo,callbackThree) {
+	function initLoadRecipes(callbackOne,callbackTwo,callbackThree,callbackFour) {
 		
 		$.ajax("http://recipehub.dev/recipes?action=many",{
 			contentType: "text/plain",
@@ -62,7 +34,8 @@
 				
 				console.log({
 					message: message,
-					code: code
+					code: code,
+					request: xhr
 				});
 				
 			},
@@ -73,7 +46,7 @@
 					status: status
 				});
 				
-				data.recipes.map(function(recipe,index,recipes) {
+				data.recipes.forEach(function(recipe,index,recipes) {
 					
 					$("#recipe-list").append(function() {
 						
@@ -87,7 +60,9 @@
 					
 				});
 				
-				callbackOne(callbackTwo,callbackThree);
+				Store.recipes = data.recipes;
+				
+				callbackOne(callbackTwo,callbackThree,callbackFour);
 				
 			},
 			method: "GET"
@@ -97,7 +72,7 @@
 		
 		
 		
-	function initLoadItems(callbackOne,callbackTwo) {
+	function initLoadItems(callbackOne,callbackTwo,callbackThree) {
 		
 		$.ajax("http://recipehub.dev/fooditems?action=many",{
 			contentType: "text/plain",
@@ -107,7 +82,8 @@
 				
 				console.log({
 					message: message,
-					code: code
+					code: code,
+					request: xhr
 				});
 				
 			},
@@ -118,7 +94,7 @@
 					status: status
 				});
 				
-				data.fooditems.map(function(item,index,items) {
+				data.fooditems.forEach(function(item,index,items) {
 					
 					$("#fooditem-list").append(function() {
 						
@@ -132,7 +108,9 @@
 					
 				});
 				
-				callbackOne(callbackTwo);
+				Store.fooditems = data.fooditems;
+				
+				callbackOne(callbackTwo,callbackThree);
 				
 			},
 			method: "GET"
@@ -142,7 +120,7 @@
 		
 		
 		
-	function initLoadTraits(callbackOne) {
+	function initLoadTraits(callbackOne,callbackTwo) {
 		
 		$.ajax("http://recipehub.dev/traits?action=many",{
 			contentType: "text/plain",
@@ -152,7 +130,8 @@
 				
 				console.log({
 					message: message,
-					code: code
+					code: code,
+					request: xhr
 				});
 				
 			},
@@ -163,7 +142,7 @@
 					status: status
 				});
 				
-				data.traits.map(function(trait,index,traits) {
+				data.traits.forEach(function(trait,index,traits) {
 					
 					$("#trait-list").append(function() {
 						
@@ -177,7 +156,9 @@
 					
 				});
 				
-				callbackOne();
+				Store.traits = data.traits;
+				
+				callbackOne(callbackTwo);
 				
 			},
 			method: "GET"
@@ -187,10 +168,40 @@
 	}
 	
 	
-	window.init = function() {
+	
+	function initLoadRelations(callbackOne) {
 		
-		initLoadRecipes(initLoadItems,initLoadTraits,frontPageEvents);
+		$.ajax("http://recipehub.dev/relations",{
+			contentType: "text/plain",
+			dataType: "json",
+			cache: false,
+			error: function(xhr,message,code) {
+				
+				console.log({
+					message: message,
+					code: code,
+					request: xhr
+				});
+				
+			},
+			success: function(data,status,xhr) {
+				
+				console.log({
+					data: data,
+					status: status
+				});
+				
+				Store.fooditemRelations = data.relations;
+				callbackOne();
+				
+			},
+			method: "GET"
+			
+		});
 		
 	}
 	
-})();
+	initLoadRecipes(initLoadItems,initLoadTraits,initLoadRelations,frontPageEvents);
+	
+});
+	

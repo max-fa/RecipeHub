@@ -7,8 +7,8 @@
 		$("#edit-fooditem-form").off("submit");
 		$("#edit-fooditem-return").off("click");
 		
-		$("#edit-fooditem-form-container").css("display","none");
-		$("#main-fooditem-display").css("display","block");
+		$("#edit-fooditem-form-container").hide();
+		$("#main-fooditem-display").show();
 		
 	}
 	

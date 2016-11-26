@@ -1,9 +1,9 @@
 <?php
+require '../db/pdo_connect.php';
+require '../db/recipes/get.php';
 
 function get_one_recipe($request) {
 	
-	require '../db/pdo_connect.php';
-	require '../db/recipes/get.php';
 	$pdo = pdo_connect();
 	
 	if( $pdo ) {
@@ -41,8 +41,6 @@ function get_one_recipe($request) {
 
 function get_many_recipes($request) {
 	
-	require '../db/pdo_connect.php';
-	require '../db/recipes/get.php';
 	$pdo = pdo_connect();
 	
 	if( $pdo ) {

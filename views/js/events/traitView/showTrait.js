@@ -4,27 +4,7 @@
 	
 	function fetchTrait(callbackOne,id) {
 		
-		$.ajax("http://recipehub.dev/traits?action=one&trait_id=" + id,{
-			contentType: "text/plain",
-			dataType: "json",
-			cache: true,
-			error: function(xhr,message,code) {
-				
-				console.log({
-					message: message,
-					code: code,
-					request: xhr
-				});
-				
-			},
-			success: function(data,status,xhr) {
-				
-				callbackOne(data.trait);
-				
-			},
-			method: "GET"
-			
-		});
+		callbackOne(Store.getTrait(id));
 		
 	}
 	
@@ -40,6 +20,8 @@
 		$("#trait-title").html(trait.name);
 		$("#trait-body > p").html(trait.description);
 		
+		Store.currentObject = trait;
+		
 		traitViewEvents();
 		
 	}
@@ -52,7 +34,7 @@
 		
 		if( !evt.data ) {
 			
-			id = $(this).attr("data-trait_id");
+			id = parseInt(this.getAttribute("data-trait_id"),10);
 			fetchTrait(showObjectView,id);
 			
 		} else {
