@@ -90,15 +90,26 @@
 					
 					<div id="edit-recipe-form-container" style="display: none;">
 						<form id="edit-recipe-form">
-							<label for="title">Title:</label>
-							<input type="text" name="title">
-							<label for="ingredients">Ingredients:</label>
-							<input type="text" name="ingredients">
-							<label for="instructions">Instructions:</label>
-							<input type="text" name="instructions">
+							<span class="edit-recipe-control" id="edit-recipe-title-control">
+								<label for="edit-recipe-title">Title:</label>
+								<input type="text" name="edit-recipe-title">
+							</span>
 							
-							<input id="edit-recipe-submit" type="submit" value="Submit">
-							<input id="edit-recipe-return" type="button" value="Return to recipe">
+							<span class="edit-recipe-control" id="edit-recipe-ingredients-control">
+								<label for="edit-recipe-ingredients">Ingredients:</label>
+								<textarea name="edit-recipe-ingredients" rows="15" cols="20"></textarea>
+							</span>
+							
+							<span class="edit-recipe-control" id="edit-recipe-instructions-control">
+								<label for="edit-recipe-instructions">Instructions:</label>
+								<textarea name="edit-recipe-instructions" rows="15" cols="20"></textarea>
+							</span>
+							
+							<span id="edit-recipe-buttons">
+								<input id="edit-recipe-submit" class="button-input" type="submit" value="Submit">
+								<input id="edit-recipe-return" class="button-input" type="button" value="Return to recipe">
+							</span>
+							
 						</form>
 					</div>	
 				</div>
@@ -124,13 +135,21 @@
 					</div>
 					<div id="edit-fooditem-form-container" style="display: none;">
 						<form id="edit-fooditem-form">
-							<label for="fooditem-name">Name:</label>
-							<input type="text" name="fooditem-name">
-							<label for="fooditem-description">Description:</label>
-							<input type="text" name="fooditem-description">
+							<span class="edit-fooditem-control" id="edit-fooditem-name-control">
+								<label for="edit-fooditem-name">Name:</label>
+								<input type="text" name="edit-fooditem-name">
+							</span>
 							
-							<input id="edit-fooditem-submit" type="submit" value="Submit">
-							<input id="edit-fooditem-return" type="button" value="Return to fooditem">
+							<span class="edit-fooditem-control" id="edit-fooditem-description-control">
+								<label for="edit-fooditem-description">Description:</label>
+								<textarea name="edit-fooditem-description" rows="15" cols="20"></textarea>
+							</span>
+							
+							<span id="edit-fooditem-buttons">
+								<input id="edit-fooditem-submit" class="button-input" type="submit" value="Submit">
+								<input id="edit-fooditem-return" class="button-input" type="button" value="Return to fooditem">
+							</span>
+							
 						</form>
 					</div>
 					
@@ -159,13 +178,21 @@
 					</div>
 					<div id="edit-trait-form-container" style="display: none;">
 						<form id="edit-trait-form">
-							<label for="trait-name">Name:</label>
-							<input type="text" name="trait-name">
-							<label for="trait-description">Description:</label>
-							<input type="text" name="trait-description">
+							<span class="edit-trait-control" id="edit-trait-name-control">
+								<label for="edit-trait-name">Name:</label>
+								<input type="text" name="edit-trait-name">
+							</span>
 							
-							<input id="edit-trait-submit" type="submit" value="Submit">
-							<input id="edit-trait-return" type="button" value="Return to trait">
+							<span class="edit-trait-control" id="edit-trait-description-control">
+								<label for="edit-trait-description">Description:</label>
+								<textarea name="edit-trait-description" rows="15" cols="20"></textarea>
+							</span>
+							
+							<span id="edit-trait-buttons">
+								<input id="edit-trait-submit" class="button-input" type="submit" value="Submit">
+								<input id="edit-trait-return" class="button-input" type="button" value="Return to trait">
+							</span>
+							
 						</form>
 					</div>
 				</div>

@@ -241,6 +241,7 @@
 	Start: Forms
 */
 
+	/* Create recipe styles below */
 	#create-recipe-form {
 		text-align: center;
 	}
@@ -287,7 +288,7 @@
 	}
 	
 	
-	/* fooditems below */
+	/* Create fooditem styles below */
 	
 	#create-fooditem-form {
 		text-align: center;
@@ -322,7 +323,7 @@
 	}
 	
 	
-	/* traits below */
+	/* Create trait styles below */
 	
 	#create-trait-form {
 		text-align: center;
@@ -352,6 +353,118 @@
 	
 	
 	#new-trait-description-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	
+	/* edit recipe styles */
+	
+	#edit-recipe-form {
+		text-align: center;
+	}
+	
+	#edit-recipe-buttons {
+		display: block;
+		margin-left: 160px;
+	}
+	
+	
+	.edit-recipe-control {
+		margin-bottom: 10px;
+	}
+	
+	
+	#edit-recipe-title-control {
+		display: block;
+		margin-right: 25px;
+		margin-top: 12px;
+	}
+	
+	
+	#edit-recipe-ingredients-control {
+		display: inline-block;
+	}
+	
+	
+	#edit-recipe-ingredients-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	
+	#edit-recipe-instructions-control {
+		display: inline-block;
+	}
+	
+	
+	#edit-recipe-instructions-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+
+	/* edit fooditem styles */
+	
+	#edit-fooditem-form {
+		text-align: center;
+	}
+	
+	#edit-fooditem-buttons {
+		display: block;
+		margin-left: 160px;
+	}
+	
+	
+	.edit-fooditem-control {
+		margin-bottom: 10px;
+	}
+	
+	
+	#edit-fooditem-name-control {
+		display: block;
+		margin-right: 25px;
+		margin-top: 12px;
+	}
+	
+	
+	#edit-fooditem-description-control {
+		display: inline-block;
+	}
+	
+	
+	#edit-fooditem-description-control > label {
+		display: block;
+		margin-bottom: 5px;
+	}
+	
+	/* edit trait styles */
+	
+	#edit-trait-form {
+		text-align: center;
+	}
+	
+	#edit-trait-buttons {
+		display: block;
+		margin-left: 160px;
+	}
+	
+	
+	.edit-trait-control {
+		margin-bottom: 10px;
+	}
+	
+	
+	#edit-trait-name-control {
+		display: block;
+		margin-right: 25px;
+		margin-top: 12px;
+	}
+	
+	
+	#edit-trait-description-control {
+		display: inline-block;
+	}
+	
+	
+	#edit-trait-description-control > label {
 		display: block;
 		margin-bottom: 5px;
 	}
